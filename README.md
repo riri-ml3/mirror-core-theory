@@ -1,6 +1,18 @@
 # Mirror Core Theory
 ## Subjectivation Jump & Self-reflective Meaning Inversion (v0.1)
 
+> **English (Public Notice / Scope)**
+> - This repository is a **research draft**. Statements may be revised in later versions.
+> - **Baseline snapshot:** see **Release `v0.1`** (recommended for citation).
+> - Scope: *Mirror Core Theory* (subjectivation jump / self-reflective meaning inversion) + bridge skeletons.
+> - Not a claim of empirical proof; this is a **conceptual + formalization** work-in-progress.
+
+> **日本語（公開向け注意 / 範囲）**
+> - 本リポジトリは **研究ドラフト**です。記述は将来のバージョンで更新・修正される可能性があります。
+> - **基準点（Baseline）:** 引用する場合は **Release `v0.1`** を参照してください。
+> - 範囲：ミラー理論核（主体化ジャンプ／意味の自己反転認識）＋ Bridge（接続）スケルトン。
+> - 実証済み結論の断定ではなく、**概念整理＋定式化**の進行中成果です。
+
 ### English
 This repository documents the **core** of Mirror Core Theory:  
 the mechanism by which an observer becomes a subject through a self-referential inversion of meaning, producing a structural "jump" in information evolution.
@@ -46,6 +58,8 @@ the mechanism by which an observer becomes a subject through a self-referential 
 - 反証提案を超えた実証
 
 ---
+
+- **Release:** `v0.1` — Mirror Core Theory (Core + Bridges Skeleton)
 
 ## Files
 - `mirror_core_theory.md` — Core document (Logical Trajectory Document, v0.1)
