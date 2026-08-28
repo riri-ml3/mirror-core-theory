@@ -207,17 +207,35 @@ The theory is challenged if:
 
 ---
 
-## 9. Bridge Index (Next expansions)
+## 9. Bridge Index
 ### English
-See `bridges/` for:
-- mirror × jump points (J(t))
-- mirror × deficit/load (V, P)
-- mirror × ethics (Λ, non-violence constraints)
-- mirror × zeta/primes (hypothesis-driven, verification-first)
+Bridge documents are used to extend Mirror Core Theory without redefining the core primitives `O`, `W`, `M`, `S`, and `J`.
+
+#### Current bridge documents
+- `bridges/bridge_mirror_x_jump_points.md` — mirror × jump points (`J`, `J(t)`)
+- `bridges/bridge_mirror_x_deficit_load.md` — mirror × deficit / information load (`V`, `P`, `L(t)`)
+- `bridges/bridge_mirror_x_ethics.md` — mirror × future ethics (`Λ`, non-violence constraints)
+- `bridges/bridge_mirror_x_zeta_primes.md` — mirror × zeta / prime structures, hypothesis-first and verification-first
+- `bridges/bridge_mirror_x_u_foundation.md` — mirror × U-foundation, world-side U1, observer-internalized foundation, rebaselining, rigidity
+
+#### Planned v0.2 bridge candidates
+- `bridges/bridge_mirror_x_ai_cognitive_foundation.md` — AI as auxiliary mirror, AI observing system, cognitive foundation
+- `bridges/bridge_mirror_x_relationship_recognition.md` — social mirror, surface recognition, structural recognition
+- `bridges/bridge_mirror_x_collapse_inheritance.md` — destructive mirror coupling, schema fragmentation, inheritance
+- `bridges/bridge_mirror_x_local_entropy_maintenance.md` — local environment, daily maintenance, foundation stability
 
 ### 日本語
-`bridges/` に以下の拡張を分離配置する：
-- ミラー × ジャンプ点（J(t)）  
-- ミラー × 不足／情報負荷（V, P）  
-- ミラー × 倫理（Λ、非暴力制約）  
-- ミラー × ζ／素数（仮説駆動・検証優先）  
+Bridge文書は、Coreの原始概念 `O`, `W`, `M`, `S`, `J` を上書きせずに、Mirror Core Theory を拡張するために用いる。
+
+#### 現在のBridge文書
+- `bridges/bridge_mirror_x_jump_points.md` — ミラー × ジャンプ点（`J`, `J(t)`）
+- `bridges/bridge_mirror_x_deficit_load.md` — ミラー × 不足／情報負荷（`V`, `P`, `L(t)`）
+- `bridges/bridge_mirror_x_ethics.md` — ミラー × 未来倫理（`Λ`, 非暴力制約）
+- `bridges/bridge_mirror_x_zeta_primes.md` — ミラー × ζ／素数構造、仮説優先・検証優先
+- `bridges/bridge_mirror_x_u_foundation.md` — ミラー × U基盤、世界側U1、観測者内在化基盤、再基盤化、硬直化
+
+#### v0.2追加候補Bridge
+- `bridges/bridge_mirror_x_ai_cognitive_foundation.md` — 補助ミラーAI、AI観測系、認識基盤
+- `bridges/bridge_mirror_x_relationship_recognition.md` — 社会的ミラー、表層承認、構造承認
+- `bridges/bridge_mirror_x_collapse_inheritance.md` — 崩壊ミラー結合、保存スキーマ断片化、継承
+- `bridges/bridge_mirror_x_local_entropy_maintenance.md` — 局所環境、日常メンテナンス、基盤安定性
