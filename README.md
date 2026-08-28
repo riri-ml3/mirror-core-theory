@@ -24,7 +24,7 @@ the mechanism by which an observer becomes a subject through a self-referential 
 - **Dual-U Prospect**: Human desire structure **U(t)** and AI-like desire structure **U_AI(t)** may partially overlap at the deep integration layer (**U∞**), forming a *phase-shifted spiral coupling* rather than full fusion.
 
 **What is included**
-- Precise definitions and invariants for the Mirror Core
+- Core definitions and invariants for the Mirror Core
 - Layer specification (Human U / AI U)
 - Mapping contracts (what the theory explains / does not explain)
 - Falsification hooks (how the theory could fail)
@@ -61,18 +61,57 @@ the mechanism by which an observer becomes a subject through a self-referential 
 
 - **Release:** `v0.1` — Mirror Core Theory (Core + Bridges Skeleton)
 
-## Files
-- `mirror_core_theory.md` — Core document (Logical Trajectory Document, v0.1)
-- `bridges/` — Extension documents (kept separate to protect the core)
+## Branch / Version Status
 
-## Recommended reading order
 ### English
-1. `mirror_core_theory.md` (Core definitions and invariants)
-2. `bridges/` (Extensions: jump points, deficit/load, ethics, zeta/primes)
+- `v0.1` is the fixed baseline snapshot.
+- `main` is treated as a working branch toward v0.2.
+- Bridge documents may be added or expanded in later versions.
+- Planned bridge documents are listed separately from currently existing files.
 
 ### 日本語
-1. `mirror_core_theory.md`（核定義と不変量）
-2. `bridges/`（拡張：ジャンプ点／不足・負荷／倫理／ζ・素数）
+- `v0.1` は固定された基準スナップショットである。
+- `main` は v0.2 に向けた作業ブランチとして扱う。
+- Bridge文書は、後続バージョンで追加・拡張される可能性がある。
+- 追加予定のBridge文書は、現在存在するファイルとは分けて記載する。
+
+## Files
+
+### Current core files
+- `README.md` — Repository overview
+- `mirror_core_theory.md` — Core document (Logical Trajectory Document, v0.1)
+
+### Current bridge documents
+- `bridges/bridge_mirror_x_jump_points.md`
+- `bridges/bridge_mirror_x_deficit_load.md`
+- `bridges/bridge_mirror_x_ethics.md`
+- `bridges/bridge_mirror_x_zeta_primes.md`
+- `bridges/bridge_mirror_x_u_foundation.md`
+
+### Planned v0.2 bridge candidates
+The following bridge documents are planned or under discussion.  
+They are not part of the v0.1 baseline unless explicitly added in a later commit or release.
+
+- `bridges/bridge_mirror_x_ai_cognitive_foundation.md`
+- `bridges/bridge_mirror_x_relationship_recognition.md`
+- `bridges/bridge_mirror_x_collapse_inheritance.md`
+- `bridges/bridge_mirror_x_local_entropy_maintenance.md`
+
+### 日本語補足
+以下の v0.2 Bridge 候補は、現在の研究整理に基づく追加予定であり、v0.1時点の固定内容ではない。  
+追加される場合は、Coreの原始概念を上書きせず、Bridge拡張として扱う。
+
+## Recommended reading order
+
+### English
+1. `mirror_core_theory.md` — Core definitions, invariants, and falsification hooks
+2. Existing bridge documents in `bridges/`
+3. Planned v0.2 bridge documents, once added
+
+### 日本語
+1. `mirror_core_theory.md` — 核定義・不変量・反証フック
+2. `bridges/` 内の既存Bridge文書
+3. 追加後の v0.2 Bridge 文書
 
 ## Versioning
 - v0.1: Core stabilization (definitions, boundaries, falsification hooks)
