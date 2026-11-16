@@ -498,3 +498,41 @@ This bridge defines a conservative temporal-structure theory:
 while keeping subjective time `Psi_O` and physical time `tau_O` distinct.
 
 The decisive next step is empirical: determine whether structural reconfiguration and persistence predict temporal organization beyond raw entropy, surprise, and event-boundary count.
+
+
+---
+
+## 19. Synthetic Experiment A status / 合成実験Aの状態
+
+A reproducible synthetic model-identifiability experiment has been added:
+
+- `experiments/temporal_structure_experiment_a.py`
+- `experiments/temporal_structure_experiment_a.md`
+
+Baseline configuration:
+
+- identical first event in both conditions: `y_1 = 3.5`
+- matched initial surprise: `7.0439385 nat`
+- matched immediate Bayesian information gain: `G_1 = 1.3847190 nat`
+- 5000 paired replications
+- 20-step horizon
+- change mean: `2.0`
+- jump threshold: `0.95`
+- confirmation: two consecutive threshold crossings
+
+Observed in the synthetic model:
+
+- outlier jump rate: `0.0094`
+- change-point jump rate: `1.0000`
+- median final structural evidence: outlier `0.0088`, change-point `1.0000`
+- median held-out predictive gain among detected trials: outlier `-1.2800`, change-point `+1.9042`
+
+A parameter sweep over 81 cells showed that the separation is not parameter-free. Weak changes with skeptical priors and high thresholds reduce sensitivity, while large isolated events combined with permissive priors and low thresholds increase false jumps.
+
+### Interpretation boundary / 解釈境界
+
+The simulation demonstrates only that immediate surprise / information gain and persistent structural evidence are computationally separable in the specified minimal model.
+
+It does not validate human `Theta_O`, establish universal jump thresholds, demonstrate superiority to existing cognitive models, or derive physical time from information.
+
+The next stronger test is a direct model comparison between continuous-learning and hybrid jump formulations on the same synthetic datasets.
