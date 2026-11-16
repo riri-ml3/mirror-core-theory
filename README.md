@@ -89,6 +89,12 @@ the mechanism by which an observer becomes a subject through a self-referential 
 - `bridges/bridge_mirror_x_u_foundation.md`
 - `bridges/bridge_mirror_x_temporal_structure.md` — v0.2 draft; observer-relative structural time, B-0–B-6 audit, falsification program
 
+### Current temporal-structure experiments
+- `experiments/temporal_structure_experiment_a.py` — synthetic outlier vs change-point identifiability test
+- `experiments/temporal_structure_experiment_a.md` — Experiment A assumptions, results, sensitivity limits
+- `experiments/temporal_structure_experiment_a2_model_comparison.py` — soft Bayesian vs hard jump vs delta-rule comparison
+- `experiments/temporal_structure_experiment_a2_model_comparison.md` — negative predictive result and revised jump interpretation
+
 ### Planned v0.2 bridge candidates
 The following bridge documents are planned or under discussion.  
 They are not part of the v0.1 baseline unless explicitly added in a later commit or release.
