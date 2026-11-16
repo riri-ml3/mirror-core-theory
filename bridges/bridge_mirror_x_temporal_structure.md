@@ -536,3 +536,63 @@ The simulation demonstrates only that immediate surprise / information gain and 
 It does not validate human `Theta_O`, establish universal jump thresholds, demonstrate superiority to existing cognitive models, or derive physical time from information.
 
 The next stronger test is a direct model comparison between continuous-learning and hybrid jump formulations on the same synthetic datasets.
+
+
+---
+
+## 20. Synthetic Experiment A2 — predictive model comparison / 合成実験A2
+
+A second synthetic experiment directly compared:
+
+- soft Bayesian model averaging,
+- a tuned hard-threshold jump model,
+- a tuned continuous delta-rule learner.
+
+Training used 2000 paired sequences; held-out testing used 5000 paired outlier/change sequences (10000 total).
+
+Held-out mean log predictive density:
+
+- soft model: `-1.49444`
+- hard jump: `-1.54468`
+- delta rule: `-1.54610`
+
+Paired soft-minus-hard difference:
+
+`+0.05024`
+
+normal-approximation 95% interval:
+
+`[+0.04809, +0.05239]`
+
+Thus, the current hard-jump implementation did **not** show predictive superiority. The soft Bayesian model was clearly better under predictive log score.
+
+### Consequence / 理論上の帰結
+
+The bridge must not justify `J` by claiming that hard discrete switching necessarily improves prediction.
+
+The role of `J` is narrowed to a candidate **structural / representational transition**. A system may update predictive beliefs continuously while still showing discrete reorganization in representation, event segmentation, memory organization, preservation schema, or behavior.
+
+Therefore:
+
+`predictive continuity != representational continuity`
+
+and:
+
+`hard predictive switching is not a required condition for J`
+
+### Revised TP4
+
+The earlier strong reading of TP4 is weakened.
+
+A stronger and more appropriate empirical test is now:
+
+> If `J` is an independent structural event, jump-linked observables should show discrete or hysteretic organization that cannot be explained solely by continuous posterior belief or prediction error.
+
+### Revised falsification hook T-F4r
+
+**T-F4r** — If appropriately designed experiments show that all apparent jump phenomena are fully explained by continuous posterior-belief trajectories, with no independent discontinuity in representation, memory organization, behavior, event segmentation, or temporal reconstruction, the independent jump variable `J` should be removed from the temporal-structure model.
+
+Files:
+
+- `experiments/temporal_structure_experiment_a2_model_comparison.py`
+- `experiments/temporal_structure_experiment_a2_model_comparison.md`
