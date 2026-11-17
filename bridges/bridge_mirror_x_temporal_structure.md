@@ -611,3 +611,34 @@ The following v0.2 companion documents refine specific temporal layers without m
 - `bridges/temporal_structure_psychological_time_v0_2.md` — reintegration of early affective-time hypotheses into `tau–Theta–Psi`, with prospective/retrospective separation
 
 These documents are part of the Temporal Structure draft layer and do not alter the v0.1 Core.
+
+---
+
+## 22. Synthetic Experiment A3 — independent-J identifiability / 独立Jの識別可能性
+
+A3 first tested the detector itself before any human-level interpretation.
+
+Two synthetic worlds were compared:
+
+- Null world: the observable is generated entirely from a smooth continuous posterior-like variable.
+- True-J world: the same smooth variable is present, plus an independently contributing hysteretic latent state.
+
+The candidate-J thresholds were tuned on training data only and evaluated on held-out sequences.
+
+Baseline result over 12 independent train/test replications per world:
+
+- Null mean held-out log-loss improvement from adding J: `-0.000207`; 95%-support `0/12`.
+- True-J mean held-out improvement: `+0.008088`; 95%-support `12/12`.
+- True-J mean Brier-score improvement: `+0.003387`.
+
+A sensitivity sweep showed that weak imposed J effects were often not recoverable, whereas moderate-to-large imposed effects were recovered more reliably.
+
+Therefore this result establishes only synthetic identifiability under specified conditions. It does not validate human `J`, `Theta_O`, hysteresis as the true mechanism, or physical-time emergence.
+
+Files:
+
+- `experiments/temporal_structure_experiment_a3_protocol.md`
+- `experiments/temporal_structure_experiment_a3_identifiability.py`
+- `experiments/temporal_structure_experiment_a3_identifiability.md`
+
+The next step is human-level A3 design with continuous posterior belief, event-boundary variables, boredom/engagement/time-attention, memory, and prospective/retrospective time separated.
