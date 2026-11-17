@@ -89,6 +89,8 @@ the mechanism by which an observer becomes a subject through a self-referential 
 - `bridges/bridge_mirror_x_u_foundation.md`
 - `bridges/bridge_mirror_x_temporal_structure.md` — v0.2 draft; observer-relative structural time, B-0–B-6 audit, falsification program
 - `bridges/temporal_structure_consistency_audit_v0_2.md` — B-0–B-5 companion audit; explicit boundaries, zero-extension limit, and non-claims
+- `bridges/temporal_structure_lifetime_normalization_v0_2.md` — lifetime-normalized coordinate `Lambda_O`; separates physical duration, normalized life position, structural history, and Absolute-0/100
+- `bridges/temporal_structure_psychological_time_v0_2.md` — reintegrates early affective-time hypotheses into prospective/retrospective psychological time and structural-time separation
 
 ### Current temporal-structure experiments
 - `experiments/temporal_structure_experiment_a.py` — synthetic outlier vs change-point identifiability test
