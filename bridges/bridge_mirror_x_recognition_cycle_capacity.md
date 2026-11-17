@@ -555,7 +555,8 @@ Current research status:
 - `L_log` and `K_conn` are separated from U-state variables,
 - `U_∞` is not imposed as a mandatory stage in every rebaselining cycle,
 - Absolute-0 / 0↔100 claims remain outside the numerical simulation,
-- the next required step is a U-transition map audit before further model expansion.
+- the U-transition map audit has been completed at Bridge level,
+- the next required step is a minimal dynamic model that respects the Transition Contract v0.1.
 
 ### 日本語
 
@@ -568,7 +569,8 @@ Current research status:
 - `L_log` と `K_conn` をU状態変数から分離する。
 - `U_∞` を各再基盤化周期の必須段階として課さない。
 - Absolute-0 / 0↔100 に関する主張を数値シミュレーションの外部に保持する。
-- 次工程はモデル拡張ではなく U-transition map audit とする。
+- U-transition map audit はBridgeレベルで完了した。
+- 次工程は Transition Contract v0.1 を守る最小動的モデルの設計とする。
 
 ---
 
@@ -603,3 +605,388 @@ Any future promotion of these propositions into Core requires independent theore
 - 既存U-Foundation Bridgeの定義
 
 本書の命題を将来Coreへ昇格させる場合には、独立した理論的・経験的根拠を必要とする。
+
+
+---
+
+## 14. U-Transition Map Audit / U遷移マップ監査
+
+### English
+
+The transition-map audit distinguishes fixed relations from working hypotheses.
+
+| Relation | Status | Contract |
+|---|---|---|
+| `U_1^W → R_O → U_{1,O}^{(n)}` | retained existing definition | world-side conditions require observer-specific internalization |
+| foundation stability → higher-order U2 probability | retained existing prediction | stability may increase probability; it does not guarantee U2 |
+| `U_2^{(n)} → B_O → U_{1,O}^{(n+1)}` | retained existing definition | matured U2 may be rebaselined |
+| `B_O → K_O` | retained existing definition | rebaselining may jointly produce stability and rigidity |
+| irreversible/unresolved difference → `Q` | Bridge hypothesis | candidate input relation only |
+| `Q → U2` | conditional hypothesis | requires a gate; no universal direct causation |
+| `L_log →` transition efficiency | working modifier hypothesis | exact edge unresolved |
+| `K_conn →` semantic integration/persistence | working modifier hypothesis | exact edge unresolved |
+| `U2 → U∞` | not mandatory | must not be imposed in every cycle |
+| `U∞ → next U1` | unresolved | not part of the minimal cycle |
+| `F_rec` as an independent state node | rejected | treat as derived cycle-capacity measure |
+
+The minimal causal skeleton is therefore:
+
+`foundation + unresolved difference → gated higher-order response → rebaselining → next foundation`
+
+This is a Bridge-level causal candidate, not an established empirical law.
+
+### 日本語
+
+U-transition Map Audit では、既存定義で固定できる関係と、作業仮説を分離する。
+
+| 関係 | 状態 | 契約 |
+|---|---|---|
+| `U_1^W → R_O → U_{1,O}^{(n)}` | 既存定義を維持 | 世界側条件は観測者固有の内在化を必要とする |
+| 基盤安定性 → 高次U2活動確率 | 既存予測を維持 | 安定は確率を高めうるがU2を保証しない |
+| `U_2^{(n)} → B_O → U_{1,O}^{(n+1)}` | 既存定義を維持 | 成熟したU2は再基盤化されうる |
+| `B_O → K_O` | 既存定義を維持 | 再基盤化は安定と硬直を同時に生みうる |
+| 不可逆／未解決差分 → `Q` | Bridge仮説 | 入力関係候補に留める |
+| `Q → U2` | 条件付き仮説 | ゲートを必要とし、普遍的直接因果としない |
+| `L_log →` 遷移効率 | 作業修飾仮説 | 正確な作用点は未確定 |
+| `K_conn →` 意味統合／保持 | 作業修飾仮説 | 正確な作用点は未確定 |
+| `U2 → U∞` | 必須ではない | 各周期の必須遷移として課さない |
+| `U∞ → next U1` | 未確定 | 最小循環には含めない |
+| `F_rec` を独立状態ノードとする | 棄却 | 循環容量から導出される派生量として扱う |
+
+したがって最小因果骨格は、
+
+`基盤 + 未解決差分 → ゲート付き高次反応 → 再基盤化 → 次周期基盤`
+
+である。
+
+これはBridgeレベルの因果候補であり、確立された経験法則ではない。
+
+---
+
+## 15. Transition Contract v0.1 / 遷移契約 v0.1
+
+### 15.1 Contract classes / 契約クラス
+
+### English
+
+Each variable must belong to one of four operational classes:
+
+1. **Input**: introduces external or unresolved difference into the cycle.
+2. **Gate**: determines whether higher-order processing can become active.
+3. **Modifier**: changes transition quality or efficiency without being the transition target itself.
+4. **Output / retained structure**: becomes a candidate for rebaselining or downstream measurement.
+
+No variable may change class merely to improve simulation fit.
+
+### 日本語
+
+各変数は、以下の4つの操作クラスのいずれかに属さなければならない。
+
+1. **Input**：外部情報または未解決差分を循環へ入力する。
+2. **Gate**：高次処理が前景化できるかを条件付ける。
+3. **Modifier**：遷移対象そのものではなく、遷移の質または効率を修飾する。
+4. **Output / retained structure**：再基盤化または下流測定の候補となる。
+
+シミュレーション適合性を改善する目的だけで、変数のクラスを変更してはならない。
+
+### 15.2 Input contract / 入力契約
+
+### English
+
+Candidate inputs are:
+
+- `Δ_unres`: unresolved difference or mismatch,
+- `R_nr`: non-recoverability / irreversibility weighting candidate,
+- `P_info`: external information pressure,
+- context variables not yet formalized.
+
+A provisional problem-salience variable may be written only as a placeholder:
+
+`Q = Φ(Δ_unres, R_nr, context)`
+
+The function `Φ` is not yet specified.
+
+`R_nr` must not be interpreted as "more irreversible = more meaningful."  
+It is only a candidate weight on unresolved difference.
+
+### 日本語
+
+入力候補は以下である。
+
+- `Δ_unres`：未解決差分または不一致
+- `R_nr`：非回収可能性／不可逆性の重み候補
+- `P_info`：外部情報圧
+- 未定式化の文脈変数
+
+問題顕著性の暫定表現は、プレースホルダとしてのみ、
+
+`Q = Φ(Δ_unres, R_nr, context)`
+
+と置く。
+
+関数 `Φ` はまだ定義しない。
+
+`R_nr` を「不可逆性が高いほど意味が大きい」と解釈してはならない。  
+未解決差分へ作用する候補重みに留める。
+
+### 15.3 Gate contract / ゲート契約
+
+### English
+
+Higher-order U2 activity must not be modeled as a direct function of `Q` alone.
+
+Use an abstract gate:
+
+`G_U2 = Gate(Q, U_{1,O}^{(n)}, Threat, Context)`
+
+with at least two possible qualitative outcomes:
+
+- **exploration-permitting**: higher-order U2 activity can become salient,
+- **preservation-dominant**: threat or foundation instability suppresses higher-order exploration.
+
+No numerical form is fixed in v0.1.
+
+### 日本語
+
+高次U2活動を `Q` 単独の直接関数としてモデル化してはならない。
+
+抽象ゲートとして、
+
+`G_U2 = Gate(Q, U_{1,O}^{(n)}, Threat, Context)`
+
+を置く。
+
+少なくとも以下の二つの質的出力を許す。
+
+- **exploration-permitting**：高次U2活動が前景化しうる。
+- **preservation-dominant**：脅威または基盤不安定性により、高次探索が抑制される。
+
+v0.1では具体的数式を固定しない。
+
+### 15.4 U2 contract / U2契約
+
+### English
+
+`U_2^{(n)}` remains a higher-order layer/structure, not a scalar synonym for curiosity or problem salience.
+
+For simulation, a scalar `u2_activity` may be introduced only as an operational proxy for activity within U2.
+
+Therefore:
+
+`Q ≠ U_2`
+
+and
+
+`u2_activity ≠ U_2^{(n)}`
+
+ontologically.
+
+### 日本語
+
+`U_2^{(n)}` は高次層／構造であり、好奇心や問題顕著性の単純なスカラー同義語ではない。
+
+シミュレーションでは、U2内部の活動を表す操作proxyとしてのみ `u2_activity` を導入できる。
+
+したがって存在論的には、
+
+`Q ≠ U_2`
+
+かつ
+
+`u2_activity ≠ U_2^{(n)}`
+
+である。
+
+### 15.5 Modifier contract: `L_log`
+### 修飾契約：`L_log`
+
+### English
+
+`L_log` is provisionally assigned to **structural processing**, not U2 activation.
+
+Working role:
+
+- organize relations,
+- detect contradictions,
+- represent causal structure,
+- improve structural coherence of candidate schemas.
+
+The safest first placement is downstream of U2 activation and upstream of rebaselining:
+
+`U2 activity → [L_log] → structured candidate → B_O`
+
+This edge remains a working hypothesis.
+
+### 日本語
+
+`L_log` は暫定的に **構造処理** に割り当て、U2発火変数とはしない。
+
+作業上の役割は、
+
+- 関係の配置
+- 矛盾検出
+- 因果構造の表現
+- 候補スキーマの構造整合性向上
+
+である。
+
+第一配置として最も安全なのは、U2活動の後、再基盤化の前である。
+
+`U2 activity → [L_log] → structured candidate → B_O`
+
+ただし、この矢印は作業仮説に留める。
+
+### 15.6 Modifier contract: `K_conn`
+### 修飾契約：`K_conn`
+
+### English
+
+`K_conn` is provisionally assigned to **semantic/self-relevant connectivity**, not hedonic preference strength.
+
+Possible roles include:
+
+- connecting incoming or processed information to an existing self-related network,
+- increasing retention of self-relevant structures,
+- supporting semantic integration before rebaselining.
+
+For the first dynamic model, use only one placement to avoid over-parameterization:
+
+`structured candidate → [K_conn] → semantically integrated candidate → B_O`
+
+Input-selection effects of `K_conn` remain a later hypothesis.
+
+### 日本語
+
+`K_conn` は暫定的に **意味的・自己関連的接続性** に割り当て、快楽的嗜好強度とはしない。
+
+候補役割は、
+
+- 入力済み／処理済み情報を既存の自己関連ネットワークへ接続する
+- 自己関連構造の保持を高める
+- 再基盤化前の意味統合を支える
+
+ことである。
+
+最初の動的モデルでは過剰パラメータ化を避けるため、作用位置を一つに限定する。
+
+`structured candidate → [K_conn] → semantically integrated candidate → B_O`
+
+`K_conn` の入力選択作用は後続仮説として保留する。
+
+### 15.7 Rebaselining contract / 再基盤化契約
+
+### English
+
+The existing definition remains authoritative:
+
+`B_O(U_2^{(n)}) = (U_{1,O}^{(n+1)}, K_O^{(n+1)})`
+
+For a simulation, the input to `B_O` may be an operationally filtered candidate derived from U2 activity, but this must not redefine `B_O` at the theoretical level.
+
+The simulation must preserve the dual output:
+
+- next-cycle foundation,
+- possible rigidity.
+
+### 日本語
+
+既存定義を優先する。
+
+`B_O(U_2^{(n)}) = (U_{1,O}^{(n+1)}, K_O^{(n+1)})`
+
+シミュレーションでは、U2活動から操作的に抽出された候補を `B_O` の入力proxyとして用いてよいが、理論レベルの `B_O` 定義を変更してはならない。
+
+また、以下の二重出力を保持する。
+
+- 次周期基盤
+- 硬直化可能性
+
+### 15.8 U∞ contract / U∞契約
+
+### English
+
+`U_∞` is excluded from the mandatory minimal transition cycle.
+
+It may later represent higher-order integration accumulated across cycles, but v0.1 does not define:
+
+- an activation threshold,
+- a transition equation,
+- a required path from U2 to U∞,
+- a required path from U∞ to the next U1.
+
+### 日本語
+
+`U_∞` を最小遷移循環の必須ノードから除外する。
+
+将来的に複数周期にまたがる高次統合を表す可能性はあるが、v0.1では以下を定義しない。
+
+- 発動閾値
+- 遷移方程式
+- U2からU∞への必須経路
+- U∞から次周期U1への必須経路
+
+### 15.9 `F_rec` contract / `F_rec`契約
+
+### English
+
+`F_rec` is a derived cycle-capacity measure, not a causal node.
+
+The preferred model class after this audit is:
+
+> flow/capacity constrained by bottlenecks
+
+rather than a flat average.
+
+A future minimal model may define transition efficiencies `T_i` and derive:
+
+`F_rec = Capacity(T_input, T_gate, T_structure, T_connect, T_rebase)`
+
+but no aggregation law is fixed in v0.1.
+
+### 日本語
+
+`F_rec` は因果ノードではなく、循環容量から導出される派生量である。
+
+本監査後の第一候補は、
+
+> ボトルネック制約を受ける flow/capacity 型
+
+であり、平坦平均モデルではない。
+
+将来の最小モデルでは遷移効率 `T_i` を導入し、
+
+`F_rec = Capacity(T_input, T_gate, T_structure, T_connect, T_rebase)`
+
+のように導出できる可能性がある。
+
+ただしv0.1では集約則を固定しない。
+
+---
+
+## 16. Minimal Dynamic Model Requirements / 最小動的モデル要件
+
+### English
+
+The next simulation must satisfy all of the following:
+
+1. preserve the existing `B_O` definition,
+2. keep U∞ outside the mandatory cycle,
+3. distinguish `Q`, `u2_activity`, `L_log`, and `K_conn`,
+4. include a preservation-dominant branch when threat/foundation instability is high,
+5. derive `F_rec` from transition performance rather than assign it exogenously,
+6. retain rigidity `K_O` as a possible cost of successful rebaselining,
+7. keep Absolute-0 / 0↔100 outside the numerical state space,
+8. declare all new numerical functions as simulation hypotheses, not Core definitions.
+
+### 日本語
+
+次のシミュレーションは、以下をすべて満たさなければならない。
+
+1. 既存の `B_O` 定義を維持する。
+2. U∞を必須循環の外に置く。
+3. `Q`, `u2_activity`, `L_log`, `K_conn` を区別する。
+4. 脅威または基盤不安定性が高い場合の保存優位分岐を含める。
+5. `F_rec` を外生的に与えず、遷移性能から導出する。
+6. 成功した再基盤化にも硬直度 `K_O` というコストが生じうる構造を保持する。
+7. Absolute-0 / 0↔100 を数値状態空間の外に保持する。
+8. 新しい数値関数はすべてシミュレーション仮説とし、Core定義としない。
