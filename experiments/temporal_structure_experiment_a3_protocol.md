@@ -193,3 +193,18 @@ If A3 fails under adequate power and well-identified tasks, the parsimonious act
 - Boeltzig M, Siestrup S, Bramão I, Schubotz RI. To update or to separate: Neural signatures and consequences of latent cause inference in episodic memory. NeuroImage. 2026;332:121898. DOI: 10.1016/j.neuroimage.2026.121898.
 - Yue WWY, Liu J, Yao Z, et al. Retrospective duration judgments of naturalistic events depend on memories of event boundaries. Psychonomic Bulletin & Review. 2026;33(1):33. DOI: 10.3758/s13423-025-02833-z.
 - Wen C, Yousif SR, Sherman BE. Unfolding event structure distorts subjective time. Cognition. 2026;267:106354. DOI: 10.1016/j.cognition.2025.106354.
+
+---
+
+## 15. Synthetic identifiability status / 合成識別監査
+
+The protocol has now passed a minimal synthetic sanity check documented in:
+
+- `experiments/temporal_structure_experiment_a3_identifiability.py`
+- `experiments/temporal_structure_experiment_a3_identifiability.md`
+
+Under the baseline synthetic configuration, the candidate-J model was not supported in 12/12 Null-world replications and was supported in 12/12 imposed True-J replications.
+
+Weak imposed J effects remained difficult to recover. Therefore empirical non-detection can count against J only when measurement sensitivity is independently adequate.
+
+This result authorizes progression to human-level A3 design; it does not validate human J.
