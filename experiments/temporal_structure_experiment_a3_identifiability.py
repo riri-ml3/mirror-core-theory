@@ -267,8 +267,8 @@ def main():
     parser.add_argument("--output", default=None)
     args = parser.parse_args()
 
-    null_rows = replicate(false_jump := False)
-    true_rows = replicate(true_jump := True)
+    null_rows = replicate(False)
+    true_rows = replicate(True)
 
     payload = {
         "status": (
