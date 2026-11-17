@@ -100,6 +100,7 @@ the mechanism by which an observer becomes a subject through a self-referential 
 - `experiments/temporal_structure_experiment_a3_protocol.md` — preregistration-oriented test of independent structural J beyond continuous belief updating
 - `experiments/temporal_structure_experiment_a3_identifiability.py` — synthetic Null-vs-True-J identifiability simulation
 - `experiments/temporal_structure_experiment_a3_identifiability.md` — held-out A3 identifiability result, false-support check, and sensitivity limits
+- `experiments/temporal_structure_experiment_a3_human_protocol.md` — human-level A3 design separating continuous inference, representational reorganization, and psychological-time confounds
 
 ### Planned v0.2 bridge candidates
 The following bridge documents are planned or under discussion.  
