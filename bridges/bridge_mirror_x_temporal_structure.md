@@ -641,4 +641,4 @@ Files:
 - `experiments/temporal_structure_experiment_a3_identifiability.py`
 - `experiments/temporal_structure_experiment_a3_identifiability.md`
 
-The next step is human-level A3 design with continuous posterior belief, event-boundary variables, boredom/engagement/time-attention, memory, and prospective/retrospective time separated.
+The human-level A3 design is now specified in `experiments/temporal_structure_experiment_a3_human_protocol.md`. The next implementation gate is design-specific recovery/power simulation before confirmatory participant collection.
