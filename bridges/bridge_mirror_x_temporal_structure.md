@@ -49,28 +49,30 @@ We distinguish:
 
 - `t`: coordinate time
 - `tau_O`: physical proper time along observer O's worldline
+- `Lambda_O`: dimensionless lifetime-normalized position, defined ex post from birth and terminal proper-time endpoints
 - `Theta_O`: dimensionless structural temporal coordinate
 - `Psi_O`: subjective duration / experienced time
 - `T_G`: stronger open hypothesis that physical time itself emerges from deeper informational relations
 
 The required separation is:
 
-`Theta_O != tau_O != Psi_O`
+`tau_O != Lambda_O != Theta_O != Psi_O`
 
 ### 日本語
 本Bridgeでは、以下を明確に分離する。
 
 - `t`：座標時間
 - `tau_O`：観測者Oの世界線に沿う物理的固有時間
+- `Lambda_O`：出生から終端までの生涯区間を `[0,1]` に正規化した無次元座標。正確値は原則として事後的に定義される
 - `Theta_O`：無次元の構造的時間座標
 - `Psi_O`：主観的持続時間
 - `T_G`：物理時間自体の情報的創発を扱う未証明の上位仮説
 
 したがって、
 
-`Theta_O != tau_O != Psi_O`
+`tau_O != Lambda_O != Theta_O != Psi_O`
 
-である。
+である。`Lambda_O = 1` は生涯正規化区間の終端であり、Absolute-100 と同一視しない。
 
 `Theta_O` は物理時計の代替ではなく、観測者が通過した構造更新履歴を表す。
 
@@ -596,3 +598,16 @@ Files:
 
 - `experiments/temporal_structure_experiment_a2_model_comparison.py`
 - `experiments/temporal_structure_experiment_a2_model_comparison.md`
+
+
+---
+
+## 21. Companion specifications / 補助仕様
+
+The following v0.2 companion documents refine specific temporal layers without modifying the fixed Core:
+
+- `bridges/temporal_structure_consistency_audit_v0_2.md` — B-0–B-5 consistency audit
+- `bridges/temporal_structure_lifetime_normalization_v0_2.md` — `Lambda_O` lifetime normalization, ex-post boundary, and separation from Absolute-0/100
+- `bridges/temporal_structure_psychological_time_v0_2.md` — reintegration of early affective-time hypotheses into `tau–Theta–Psi`, with prospective/retrospective separation
+
+These documents are part of the Temporal Structure draft layer and do not alter the v0.1 Core.
