@@ -87,6 +87,20 @@ the mechanism by which an observer becomes a subject through a self-referential 
 - `bridges/bridge_mirror_x_ethics.md`
 - `bridges/bridge_mirror_x_zeta_primes.md`
 - `bridges/bridge_mirror_x_u_foundation.md`
+- `bridges/bridge_mirror_x_temporal_structure.md` — v0.2 draft; observer-relative structural time, B-0–B-6 audit, falsification program
+- `bridges/temporal_structure_consistency_audit_v0_2.md` — B-0–B-5 companion audit; explicit boundaries, zero-extension limit, and non-claims
+- `bridges/temporal_structure_lifetime_normalization_v0_2.md` — lifetime-normalized coordinate `Lambda_O`; separates physical duration, normalized life position, structural history, and Absolute-0/100
+- `bridges/temporal_structure_psychological_time_v0_2.md` — reintegrates early affective-time hypotheses into prospective/retrospective psychological time and structural-time separation
+
+### Current temporal-structure experiments
+- `experiments/temporal_structure_experiment_a.py` — synthetic outlier vs change-point identifiability test
+- `experiments/temporal_structure_experiment_a.md` — Experiment A assumptions, results, sensitivity limits
+- `experiments/temporal_structure_experiment_a2_model_comparison.py` — soft Bayesian vs hard jump vs delta-rule comparison
+- `experiments/temporal_structure_experiment_a2_model_comparison.md` — negative predictive result and revised jump interpretation
+- `experiments/temporal_structure_experiment_a3_protocol.md` — preregistration-oriented test of independent structural J beyond continuous belief updating
+- `experiments/temporal_structure_experiment_a3_identifiability.py` — synthetic Null-vs-True-J identifiability simulation
+- `experiments/temporal_structure_experiment_a3_identifiability.md` — held-out A3 identifiability result, false-support check, and sensitivity limits
+- `experiments/temporal_structure_experiment_a3_human_protocol.md` — human-level A3 design separating continuous inference, representational reorganization, and psychological-time confounds
 
 ### Planned v0.2 bridge candidates
 The following bridge documents are planned or under discussion.  
