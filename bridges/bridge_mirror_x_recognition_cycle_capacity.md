@@ -990,3 +990,529 @@ The next simulation must satisfy all of the following:
 6. 成功した再基盤化にも硬直度 `K_O` というコストが生じうる構造を保持する。
 7. Absolute-0 / 0↔100 を数値状態空間の外に保持する。
 8. 新しい数値関数はすべてシミュレーション仮説とし、Core定義としない。
+
+
+---
+
+## 17. Model Form Audit v0.1 / 数式形監査 v0.1
+
+### 17.1 Audit result / 監査結果
+
+**PASS WITH REVISIONS**
+
+The candidate one-cycle model is structurally usable, but four revisions are required before it should be treated as the minimal dynamic-model baseline.
+
+1. remove theoretical dependence on `eps_num` and handle zero-capacity states explicitly,
+2. prevent double counting of `P_info`,
+3. interpret multiplicative flow only through explicit stage-transfer efficiencies and preserve residual flows,
+4. do not fix the scalar aggregation law for `F_rec` until the processing architecture is specified.
+
+### 日本語
+
+**条件付きPASS（修正必須）**
+
+一周期モデル候補は構造的には利用可能であるが、最小動的モデルの基準形とする前に以下の4修正を必要とする。
+
+1. 理論式から `eps_num` 依存を外し、容量0を明示的に処理する。
+2. `P_info` の二重計上を避ける。
+3. 積型フローは明示的な段階通過効率に限定し、各段階の残差を保存する。
+4. 処理アーキテクチャを確定するまで `F_rec` の単一集約則を固定しない。
+
+---
+
+### 17.2 Problem-salience function `Q`
+
+The exponential candidate
+
+`Q = 1 - (1 - Δ_unres)^(1 + β_R R_nr)`
+
+satisfies the intended boundary and monotonicity conditions for `β_R ≥ 0`:
+
+- `Δ_unres = 0 → Q = 0`,
+- `Δ_unres = 1 → Q = 1`,
+- increasing `R_nr` cannot create salience when `Δ_unres = 0`,
+- `Q` increases monotonically with unresolved difference and non-recoverability.
+
+However, the exponent has no established theoretical interpretation and may saturate rapidly.
+
+For the minimal baseline, a simpler bounded interaction family is preferred:
+
+`Q = Δ_unres + β_R R_nr Δ_unres (1 - Δ_unres)`
+
+with
+
+`0 ≤ β_R ≤ 1`.
+
+This form preserves:
+
+- `Q(0,R_nr)=0`,
+- `Q(1,R_nr)=1`,
+- `Q(Δ,0)=Δ`,
+- monotonicity in `Δ_unres` and `R_nr`,
+- boundedness `0 ≤ Q ≤ 1`.
+
+It also makes the role of `R_nr` explicit: it amplifies an already existing unresolved difference, rather than generating difference by itself.
+
+This remains a simulation hypothesis, not a theoretical definition of meaning.
+
+### 日本語
+
+指数型候補
+
+`Q = 1 - (1 - Δ_unres)^(1 + β_R R_nr)`
+
+は、`β_R ≥ 0` の範囲で意図した境界条件と単調性を満たす。
+
+- `Δ_unres = 0 → Q = 0`
+- `Δ_unres = 1 → Q = 1`
+- `Δ_unres = 0` のとき `R_nr` 単独では顕著性を生成しない
+- 未解決差分と非回収可能性が増えると `Q` は単調増加する
+
+ただし、指数そのものに確立した理論的意味がなく、パラメータによっては飽和が速い。
+
+最小基準形では、より単純な有界相互作用族を優先候補とする。
+
+`Q = Δ_unres + β_R R_nr Δ_unres (1 - Δ_unres)`
+
+ただし、
+
+`0 ≤ β_R ≤ 1`
+
+とする。
+
+この形は、
+
+- `Q(0,R_nr)=0`
+- `Q(1,R_nr)=1`
+- `Q(Δ,0)=Δ`
+- `Δ_unres` と `R_nr` に対する単調性
+- `0 ≤ Q ≤ 1`
+
+を保持する。
+
+また、`R_nr` は差分そのものを生成せず、既に存在する未解決差分を増幅する候補因子として明示できる。
+
+これは意味の理論定義ではなく、シミュレーション仮説である。
+
+---
+
+### 17.3 Availability gate / 利用可能性ゲート
+
+The candidate logistic form is retained provisionally:
+
+`G_avail = sigmoid(κ(f_n - θ_F - λ_T Threat_n))`
+
+with:
+
+- `κ > 0`,
+- `λ_T ≥ 0`.
+
+The name is revised from "U2 gate" to **availability gate**.
+
+Higher-order activity is represented as:
+
+`X_U2 = Q · G_avail`
+
+This separates:
+
+- salience amplitude `Q`,
+- availability to process that salience `G_avail`.
+
+Therefore, low `Q` does not require a separate hard threshold, and a high `Q` does not guarantee high U2 activity when the foundation is unstable or threat is high.
+
+The preservation-side residual at this gate is:
+
+`R_gate = Q(1 - G_avail)`.
+
+### 日本語
+
+ロジスティック候補は暫定的に維持する。
+
+`G_avail = sigmoid(κ(f_n - θ_F - λ_T Threat_n))`
+
+ただし、
+
+- `κ > 0`
+- `λ_T ≥ 0`
+
+とする。
+
+名称は「U2ゲート」ではなく、**利用可能性ゲート**とする。
+
+高次活動proxyは、
+
+`X_U2 = Q · G_avail`
+
+とする。
+
+これにより、
+
+- 顕著性の大きさ `Q`
+- その顕著性を処理可能な状態 `G_avail`
+
+を分離する。
+
+したがって、`Q` が小さい場合に別のハード閾値を必須とせず、逆に `Q` が高くても基盤不安定または高脅威ならU2活動は高くならない。
+
+ゲート段階で保存側へ残る量は、
+
+`R_gate = Q(1 - G_avail)`
+
+とする。
+
+---
+
+### 17.4 Information-pressure double counting / 情報圧の二重計上
+
+The previous candidate placed `P_info` in both:
+
+1. `T_info = 1/(1 + γP_info)`, and
+2. `E_load = P_info/F_rec` while `F_rec` already contained `T_info`.
+
+This creates a structural double-counting risk.
+
+The revised ordering is:
+
+1. derive **pre-load cycle capacity** `C_pre` from stage conditions that do not contain `P_info`,
+2. compute effective load from `P_info` relative to `C_pre`,
+3. derive `T_info` from that effective load.
+
+Provisional ordering:
+
+`C_pre = Capacity(G_avail, T_L, T_K, T_R)`
+
+`E_load = Load(P_info, C_pre)`
+
+`T_info = 1/(1 + γE_load)`
+
+where `T_L`, `T_K`, and `T_R` are transfer-efficiency proxies defined below.
+
+`P_info` is therefore introduced only once into the load path.
+
+### 日本語
+
+旧候補では `P_info` が、
+
+1. `T_info = 1/(1 + γP_info)`
+2. `T_info` を含む `F_rec` に対する `E_load = P_info/F_rec`
+
+の両方に入っており、構造的な二重計上の危険がある。
+
+改訂順序は以下とする。
+
+1. `P_info` を含まない段階条件から **負荷前循環容量** `C_pre` を導出する。
+2. `P_info` を `C_pre` に対する実効負荷へ変換する。
+3. その実効負荷から `T_info` を導出する。
+
+暫定順序は、
+
+`C_pre = Capacity(G_avail, T_L, T_K, T_R)`
+
+`E_load = Load(P_info, C_pre)`
+
+`T_info = 1/(1 + γE_load)`
+
+である。
+
+ここで `T_L`, `T_K`, `T_R` は後述する段階通過効率proxyである。
+
+これにより、`P_info` は負荷経路へ一度だけ導入される。
+
+---
+
+### 17.5 Zero-capacity contract / 容量0契約
+
+The theoretical model should not define:
+
+`E_load = P_info/(C_pre + eps_num)`
+
+because `eps_num` is an implementation device and its value would artificially determine the magnitude of load near zero capacity.
+
+Instead, define the operational load relation piecewise:
+
+- if `P_info = 0`: `E_load = 0` as a model convention of zero external demand,
+- if `P_info > 0` and `C_pre > 0`: `E_load = P_info/C_pre`,
+- if `P_info > 0` and `C_pre = 0`: `E_load = +∞` in the extended operational model.
+
+Numerical code may use a machine guard, but the guard is not part of the theoretical equation and has no relation to Absolute-0.
+
+### 日本語
+
+理論モデルでは、
+
+`E_load = P_info/(C_pre + eps_num)`
+
+を定義式としない。
+
+`eps_num` は実装上の装置であり、容量0近傍の負荷量が任意の `eps_num` に依存してしまうためである。
+
+代わりに操作的負荷関係を場合分けする。
+
+- `P_info = 0` の場合：外部要求0というモデル上の規約として `E_load = 0`
+- `P_info > 0` かつ `C_pre > 0` の場合：`E_load = P_info/C_pre`
+- `P_info > 0` かつ `C_pre = 0` の場合：拡張操作モデル上で `E_load = +∞`
+
+数値コードでは機械的ガードを用いてよいが、それは理論式の一部ではなく、Absolute-0とも関係しない。
+
+---
+
+### 17.6 Stage-transfer contract and flow conservation
+### 段階通過契約とフロー保存
+
+The multiplicative form is justified only if each factor is explicitly interpreted as the fraction of the same flow that passes a stage.
+
+Therefore raw `L_log`, `K_conn`, and `K_O` must first be mapped to transfer efficiencies:
+
+`T_L = ψ_L(L_log)`
+
+`T_K = ψ_K(K_conn)`
+
+`T_R = ψ_R(K_O)`
+
+The identity proxies
+
+`T_L=L_log`, `T_K=K_conn`, `T_R=1-K_O`
+
+may be used only as first simulation hypotheses.
+
+The flow is then:
+
+`X_0 = Q`
+
+`X_1 = X_0 G_avail`
+
+`X_2 = X_1 T_info`
+
+`X_3 = X_2 T_L`
+
+`X_4 = X_3 T_K`
+
+`Y_rebase = X_4 T_R`
+
+with residuals:
+
+`R_gate = X_0-X_1`
+
+`R_info = X_1-X_2`
+
+`R_L = X_2-X_3`
+
+`R_K = X_3-X_4`
+
+`R_rebase = X_4-Y_rebase`.
+
+This gives the conservation identity:
+
+`Q = Y_rebase + R_gate + R_info + R_L + R_K + R_rebase`.
+
+The residuals are not interpreted yet. They may later represent unresolved material, preservation-side routing, unintegrated information, or next-cycle carryover, but those meanings require separate audit.
+
+### 日本語
+
+積型は、各因子が「同一情報流のうち、その段階を通過する割合」である場合にのみ正当化する。
+
+したがって、生の `L_log`, `K_conn`, `K_O` は、まず段階通過効率へ写像する必要がある。
+
+`T_L = ψ_L(L_log)`
+
+`T_K = ψ_K(K_conn)`
+
+`T_R = ψ_R(K_O)`
+
+最初のシミュレーション仮説としてのみ、
+
+`T_L=L_log`
+
+`T_K=K_conn`
+
+`T_R=1-K_O`
+
+という恒等proxyを使用してよい。
+
+その場合のフローは、
+
+`X_0 = Q`
+
+`X_1 = X_0 G_avail`
+
+`X_2 = X_1 T_info`
+
+`X_3 = X_2 T_L`
+
+`X_4 = X_3 T_K`
+
+`Y_rebase = X_4 T_R`
+
+となる。
+
+各段階の残差を、
+
+`R_gate = X_0-X_1`
+
+`R_info = X_1-X_2`
+
+`R_L = X_2-X_3`
+
+`R_K = X_3-X_4`
+
+`R_rebase = X_4-Y_rebase`
+
+と定義すると、
+
+`Q = Y_rebase + R_gate + R_info + R_L + R_K + R_rebase`
+
+というフロー保存恒等式が成立する。
+
+残差の意味はまだ固定しない。将来的に未解決情報、保存側への分岐、未統合情報、次周期への持越し等として扱う可能性があるが、別監査を必要とする。
+
+---
+
+### 17.7 Capacity aggregation audit / 容量集約監査
+
+The harmonic mean is **not rejected**, but it is not fixed as the definition of `F_rec`.
+
+Different aggregators correspond to different processing architectures:
+
+- `min(T_i)`: strict bottleneck / pipeline-capacity interpretation,
+- harmonic mean: additive stage-time / serial-rate interpretation,
+- geometric mean: multiplicative central-tendency interpretation,
+- product `ΠT_i`: end-to-end retained-flow fraction.
+
+These quantities are not interchangeable.
+
+Therefore, until the architecture is specified, use a diagnostic capacity family:
+
+`C_min = min(T_i)`
+
+`C_H = HarmonicMean(T_i)`
+
+`C_G = GeometricMean(T_i)`
+
+and separately:
+
+`R_cycle = ΠT_i`.
+
+The first audit sweep found that the qualitative directions of the revised model were preserved under `C_min`, `C_H`, and `C_G`, while their absolute magnitudes differed.
+
+Thus the current evidence supports the **flow/capacity family**, not a unique scalar aggregation law.
+
+### 日本語
+
+調和平均そのものは棄却しないが、`F_rec` の定義として固定しない。
+
+集約則は異なる処理アーキテクチャを意味する。
+
+- `min(T_i)`：厳密なボトルネック／パイプライン容量
+- 調和平均：段階時間が加算される直列処理率
+- 幾何平均：乗法的中心傾向
+- 積 `ΠT_i`：端から端まで保持されたフロー割合
+
+これらは同一ではない。
+
+したがってアーキテクチャ確定前は、診断用容量族として、
+
+`C_min = min(T_i)`
+
+`C_H = HarmonicMean(T_i)`
+
+`C_G = GeometricMean(T_i)`
+
+を併記し、別に、
+
+`R_cycle = ΠT_i`
+
+を保持する。
+
+第一回監査走査では、`C_min`, `C_H`, `C_G` のいずれでも改訂モデルの質的方向は維持されたが、絶対値は異なった。
+
+したがって現在支持されるのは単一集約則ではなく、**flow/capacity 型モデル族**である。
+
+---
+
+### 17.8 Monotonicity and conservation audit / 単調性・保存監査
+
+Using normalized variables on `[0,1]` and the revised bounded `Q` candidate, grid tests confirmed the intended qualitative directions for all three provisional capacity aggregators (`min`, harmonic, geometric):
+
+- `Δ_unres ↑ → Q ↑`,
+- `R_nr ↑ → Q ↑`,
+- `foundation stability ↑ → Y_rebase ↑`,
+- `Threat ↑ → Y_rebase ↓`,
+- `L_log ↑ → Y_rebase ↑`,
+- `K_conn ↑ → Y_rebase ↑`,
+- `K_O ↑ → Y_rebase ↓`,
+- `P_info ↑ → Y_rebase ↓`.
+
+The staged formulation also satisfied the flow-conservation identity to numerical precision.
+
+These are internal-consistency checks only. They do not validate the model empirically.
+
+### 日本語
+
+正規化変数を `[0,1]` に置き、改訂した有界 `Q` 候補を用いたグリッド試験では、3つの暫定容量集約（minimum、調和平均、幾何平均）のすべてで意図した質的方向が維持された。
+
+- `Δ_unres ↑ → Q ↑`
+- `R_nr ↑ → Q ↑`
+- 基盤安定性↑ → `Y_rebase ↑`
+- `Threat ↑ → Y_rebase ↓`
+- `L_log ↑ → Y_rebase ↑`
+- `K_conn ↑ → Y_rebase ↑`
+- `K_O ↑ → Y_rebase ↓`
+- `P_info ↑ → Y_rebase ↓`
+
+また段階フロー形式は、数値精度の範囲でフロー保存恒等式を満たした。
+
+これらは内部整合性試験であり、経験的妥当性を示すものではない。
+
+---
+
+### 17.9 Revised baseline after audit / 監査後の基準形
+
+The safest current baseline is:
+
+`Q = Δ_unres + β_R R_nr Δ_unres(1-Δ_unres)`
+
+`G_avail = sigmoid(κ(f_n - θ_F - λ_T Threat_n))`
+
+`C_pre ∈ {C_min, C_H, C_G}` during architecture audit
+
+`E_load = Load(P_info,C_pre)`
+
+`T_info = 1/(1+γE_load)`
+
+`T_L = ψ_L(L_log)`
+
+`T_K = ψ_K(K_conn)`
+
+`T_R = ψ_R(K_O)`
+
+followed by the conserved staged flow from `X_0=Q` to `Y_rebase`.
+
+No single scalar `F_rec` aggregation is fixed yet.
+
+### 日本語
+
+現時点で最も安全な基準形は以下である。
+
+`Q = Δ_unres + β_R R_nr Δ_unres(1-Δ_unres)`
+
+`G_avail = sigmoid(κ(f_n - θ_F - λ_T Threat_n))`
+
+アーキテクチャ監査中の `C_pre` は、
+
+`C_pre ∈ {C_min, C_H, C_G}`
+
+とする。
+
+`E_load = Load(P_info,C_pre)`
+
+`T_info = 1/(1+γE_load)`
+
+`T_L = ψ_L(L_log)`
+
+`T_K = ψ_K(K_conn)`
+
+`T_R = ψ_R(K_O)`
+
+とし、`X_0=Q` から `Y_rebase` までの保存型段階フローを用いる。
+
+単一スカラーの `F_rec` 集約則はまだ固定しない。
