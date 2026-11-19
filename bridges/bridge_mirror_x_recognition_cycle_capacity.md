@@ -1516,3 +1516,454 @@ No single scalar `F_rec` aggregation is fixed yet.
 とし、`X_0=Q` から `Y_rebase` までの保存型段階フローを用いる。
 
 単一スカラーの `F_rec` 集約則はまだ固定しない。
+
+
+---
+
+## 18. Processing Architecture Audit v0.1 / 処理アーキテクチャ監査 v0.1
+
+### 18.1 Audit result / 監査結果
+
+**PASS WITH STRUCTURAL REVISION**
+
+The previous capacity-family comparison was useful diagnostically, but it revealed a deeper type problem:
+
+`G_avail`, `T_L`, `T_K`, and `T_R` are currently defined as availability or transfer fractions. They are not yet service rates, processing speeds, or edge capacities per unit time.
+
+Therefore it is not theoretically valid to choose one of
+
+`min(T_i)`, harmonic mean, or geometric mean
+
+and immediately interpret the result as a workload capacity denominator.
+
+This section supersedes Section 17.9 only with respect to the interpretation of `C_pre`. The conserved-flow formulation remains valid.
+
+### 日本語
+
+**構造修正付きPASS**
+
+前段階の容量族比較は診断上有用であったが、より深い型問題が明らかになった。
+
+現在の `G_avail`, `T_L`, `T_K`, `T_R` は、利用可能性または段階通過率として定義されている。これらはまだ、単位時間あたりのサービス率、処理速度、ネットワーク辺容量ではない。
+
+したがって、
+
+`min(T_i)`、調和平均、幾何平均
+
+のいずれかを選び、その値を直ちに情報負荷の分母となる「処理容量」と解釈することは理論的に正当化できない。
+
+本節は、`C_pre` の意味づけに限って Section 17.9 を更新する。保存型フロー定式化自体は維持する。
+
+---
+
+### 18.2 Architecture and capacity must be separated
+### アーキテクチャと容量の分離
+
+Cognitive-processing research distinguishes at least:
+
+- processing architecture: serial, parallel, coactive, cascade, hybrid,
+- stopping rule,
+- dependence/interactions among channels,
+- workload capacity.
+
+These properties are related but not identical.
+
+A bottleneck observed in one class of operations does not establish a fully serial cognitive architecture. Likewise, a capacity statistic by itself does not uniquely identify whether the underlying system is serial or parallel.
+
+This distinction is adopted as a modeling constraint for the present Bridge.
+
+### 日本語
+
+認知処理研究では少なくとも、
+
+- 処理アーキテクチャ：直列、並列、coactive、cascade、hybrid
+- stopping rule
+- チャネル間依存・相互作用
+- workload capacity
+
+を区別する。
+
+特定の処理でボトルネックが観測されても、認知系全体が完全直列であることは導けない。また、容量指標だけから基盤アーキテクチャが直列か並列かを一意に識別することもできない。
+
+本Bridgeではこの区別をモデル制約として採用する。
+
+---
+
+### 18.3 Candidate architecture audit / 候補アーキテクチャ監査
+
+| Candidate | Audit | Reason |
+|---|---|---|
+| strict bottleneck / `min` | not selected as default | valid only after stage capacities/rates are defined; too strong for current transfer fractions |
+| harmonic serial-rate model | not selected as default | meaningful only under an additive stage-time or reciprocal-rate interpretation |
+| geometric aggregation | diagnostic only | summarizes multiplicative central tendency but does not specify a processing architecture |
+| fully parallel/coactive model | not selected as default | may erase the theory-required logical ordering from salience to processing to rebaselining |
+| staged cascade / hybrid | **preferred provisional architecture** | preserves logical order while allowing temporal overlap and local bottlenecks |
+
+### 日本語
+
+| 候補 | 判定 | 理由 |
+|---|---|---|
+| 厳密ボトルネック／`min` | 基準形にはしない | 段階容量・処理率を定義した後でのみ容量として解釈可能であり、現在の通過率には強すぎる |
+| 調和平均による直列処理率 | 基準形にはしない | 段階時間の加算または逆数処理率という意味を置いた場合にのみ妥当 |
+| 幾何平均 | 診断用途のみ | 乗法的中心傾向は示すが処理アーキテクチャを規定しない |
+| 完全並列／coactive | 基準形にはしない | 顕著性→処理→再基盤化という理論上の論理順序を消す危険がある |
+| staged cascade / hybrid | **暫定第一候補** | 論理順序を保持しつつ、時間的重複と局所ボトルネックを許容できる |
+
+---
+
+### 18.4 Logical order is not temporal seriality
+### 論理順序と時間的直列性は同一ではない
+
+The Bridge requires a logical dependency:
+
+`Q → availability → structural processing → semantic connectivity → rebaselining candidate`.
+
+This does **not** require that each stage finish completely before the next stage begins.
+
+The minimal architecture therefore permits cascade processing:
+
+- upstream information may begin influencing a downstream stage before upstream processing is complete,
+- stages may overlap in time,
+- a local stage may still become rate-limiting,
+- the ordered dependency is preserved.
+
+Thus the present model is neither fully serial nor fully parallel.
+
+### 日本語
+
+本Bridgeが要求するのは、
+
+`Q → availability → structural processing → semantic connectivity → rebaselining candidate`
+
+という**論理的依存順序**である。
+
+これは、各段階が完全終了してから次段階が開始することを意味しない。
+
+したがって最小アーキテクチャではcascade処理を許容する。
+
+- 上流処理が完了する前に、その情報が下流段階へ影響しうる。
+- 複数段階が時間的に重なりうる。
+- それでも局所段階が律速段階になる可能性はある。
+- 論理的依存順序は維持する。
+
+したがって現モデルは、完全直列でも完全並列でもない。
+
+---
+
+### 18.5 Aggregator ranking reversal / 集約則による順位反転
+
+Different scalar aggregators can reverse model rankings even when they receive the same type of normalized values.
+
+Example:
+
+`A = (0.40, 0.40, 0.40, 0.40)`
+
+`B = (0.35, 0.90, 0.90, 0.90)`
+
+Then:
+
+- strict minimum: `A=0.40 > B=0.35`,
+- harmonic mean: `A=0.40 < B≈0.646`,
+- geometric mean: `A=0.40 < B≈0.711`,
+- product: `A=0.0256 < B≈0.255`.
+
+Therefore the aggregator is not a neutral numerical choice. It encodes a substantive assumption about architecture and compensation.
+
+No aggregator should be selected only because its output appears intuitively reasonable.
+
+### 日本語
+
+同じ種類の正規化値を入力しても、集約則によってモデル状態の順位そのものが逆転しうる。
+
+例：
+
+`A = (0.40, 0.40, 0.40, 0.40)`
+
+`B = (0.35, 0.90, 0.90, 0.90)`
+
+このとき、
+
+- minimum：`A=0.40 > B=0.35`
+- 調和平均：`A=0.40 < B≈0.646`
+- 幾何平均：`A=0.40 < B≈0.711`
+- 積：`A=0.0256 < B≈0.255`
+
+となる。
+
+したがって集約則は中立的な数値上の選択ではなく、「補償可能性」「律速」「処理構造」に関する実質的仮定を埋め込む。
+
+出力値が直感的に見えるという理由だけで集約則を採用してはならない。
+
+---
+
+### 18.6 Separation of transfer efficiency and service capacity
+### 通過効率と処理容量の分離
+
+The model now distinguishes two classes that were previously conflated.
+
+#### A. Transfer / retention variables
+
+`G_avail, T_info, T_L, T_K, T_R`
+
+These are dimensionless fractions on `[0,1]`.
+
+They describe how much of the current information flow is available for or retained through each stage.
+
+Their natural end-to-end quantity is:
+
+`R_cycle = G_avail · T_info · T_L · T_K · T_R`.
+
+When `Q>0`:
+
+`R_cycle = Y_rebase / Q`.
+
+This is an end-to-end retained-flow fraction, not a workload capacity.
+
+#### B. Service / throughput variables
+
+A true load denominator requires a distinct class, provisionally:
+
+`μ_i` = service/processing rate of stage `i`.
+
+Only after such rates and their temporal architecture are defined may a throughput capacity
+
+`C_service`
+
+be derived.
+
+### 日本語
+
+これまで混同されていた二種類の量を分離する。
+
+#### A. 通過／保持変数
+
+`G_avail, T_info, T_L, T_K, T_R`
+
+これらは `[0,1]` の無次元割合である。
+
+各段階において現在の情報流のうち、どれだけが利用可能または保持されて通過するかを表す。
+
+自然なend-to-end量は、
+
+`R_cycle = G_avail · T_info · T_L · T_K · T_R`
+
+である。
+
+`Q>0` の場合、
+
+`R_cycle = Y_rebase / Q`
+
+でもある。
+
+これは端から端まで保持されたフロー割合であり、workload capacityではない。
+
+#### B. サービス／throughput変数
+
+情報負荷の真の分母には別クラスが必要であり、暫定的に、
+
+`μ_i` = 第i段階のサービス率／処理率
+
+を置く。
+
+この処理率と時間アーキテクチャを定義して初めて、
+
+`C_service`
+
+というthroughput capacityを導出できる。
+
+---
+
+### 18.7 Revision of `F_rec`
+
+The previous single scalar `F_rec` conflated:
+
+1. end-to-end retention/transfer quality,
+2. workload throughput capacity.
+
+This audit therefore suspends `F_rec` as a single scalar numerical variable.
+
+At the conceptual level, "recognition-cycle capacity" may remain as an umbrella term, but operationally it should be decomposed at least into:
+
+`R_cycle`: structural transfer/retention efficiency,
+
+and
+
+`C_service`: workload/service capacity.
+
+A future scalar `F_rec` may be reintroduced only if a justified mapping from these dimensions is established.
+
+### 日本語
+
+従来の単一スカラー `F_rec` は、
+
+1. end-to-endの保持／通過品質
+2. workloadに対するthroughput capacity
+
+を混同していた。
+
+したがって本監査では、`F_rec` を単一の数値変数として扱うことを一旦停止する。
+
+概念レベルでは「認識循環容量」を上位概念として保持してよいが、操作的には最低限、
+
+`R_cycle`：構造的通過／保持効率
+
+と
+
+`C_service`：workload／service capacity
+
+に分解する。
+
+将来、両者を統合する正当な写像が得られた場合にのみ、単一スカラー `F_rec` を再導入できる。
+
+---
+
+### 18.8 Consequence for information pressure
+### 情報圧モデルへの帰結
+
+Because `C_service` is not yet defined, the equation
+
+`E_load = P_info / C_pre`
+
+must not be used as the baseline dynamic equation at this stage.
+
+For the **Structural Kernel v0.1**, `T_info` remains an external or experimentally manipulated transfer-efficiency parameter.
+
+The mapping
+
+`P_info → E_load → T_info`
+
+is deferred to a later **Load/Service Extension**, after `μ_i` and `C_service` are defined.
+
+This prevents false precision and preserves the distinction between information quantity/pressure and semantic processing efficiency.
+
+### 日本語
+
+`C_service` がまだ定義されていないため、
+
+`E_load = P_info / C_pre`
+
+を現段階の基準動力学式として用いてはならない。
+
+**Structural Kernel v0.1** では、`T_info` を外生的または実験的に操作する通過効率パラメータとして保持する。
+
+`P_info → E_load → T_info`
+
+という写像は、`μ_i` と `C_service` を定義した後の **Load/Service Extension** に延期する。
+
+これにより偽の精密性を避け、情報量／情報圧と意味処理効率の区別を維持する。
+
+---
+
+### 18.9 Revised Structural Kernel v0.1
+### 改訂 Structural Kernel v0.1
+
+The architecture-neutral conserved-flow kernel is:
+
+`Q = Δ_unres + β_R R_nr Δ_unres(1-Δ_unres)`
+
+`G_avail = sigmoid(κ(f_n - θ_F - λ_T Threat_n))`
+
+`X_0 = Q`
+
+`X_1 = X_0 G_avail`
+
+`X_2 = X_1 T_info`
+
+`X_3 = X_2 T_L`
+
+`X_4 = X_3 T_K`
+
+`Y_rebase = X_4 T_R`
+
+with the residual-conservation identity retained from Section 17.6.
+
+The default temporal interpretation is **staged cascade / hybrid**:
+
+- logical dependencies are ordered,
+- temporal overlap is allowed,
+- local bottlenecks are allowed,
+- no global serial/parallel claim is made.
+
+### 日本語
+
+アーキテクチャを過剰固定しない保存型kernelは以下である。
+
+`Q = Δ_unres + β_R R_nr Δ_unres(1-Δ_unres)`
+
+`G_avail = sigmoid(κ(f_n - θ_F - λ_T Threat_n))`
+
+`X_0 = Q`
+
+`X_1 = X_0 G_avail`
+
+`X_2 = X_1 T_info`
+
+`X_3 = X_2 T_L`
+
+`X_4 = X_3 T_K`
+
+`Y_rebase = X_4 T_R`
+
+とし、Section 17.6 の残差保存恒等式を維持する。
+
+時間アーキテクチャの暫定第一解釈は **staged cascade / hybrid** とする。
+
+- 論理的依存順序は保持する。
+- 時間的な重複処理を許容する。
+- 局所ボトルネックを許容する。
+- 認知系全体が完全直列／完全並列であるとは主張しない。
+
+---
+
+### 18.10 Architecture falsification hooks
+### アーキテクチャ反証フック
+
+The staged-cascade baseline requires revision if future evidence/model behavior shows that:
+
+- later-stage processing cannot begin before completion of an earlier stage,
+- all relevant stages share a single indivisible central channel,
+- the supposed ordered stages are better explained by independent parallel channels with no directional dependency,
+- `L_log` and `K_conn` cannot be separated as sequentially dependent transformations,
+- measured workload effects can be explained only by a different architecture,
+- end-to-end retention and throughput capacity empirically collapse to one dimension under a justified measurement model.
+
+### 日本語
+
+以下が示された場合、staged-cascade基準形は改訂を必要とする。
+
+- 後段処理が前段完了前には一切開始できない。
+- 関係する全段階が単一の分割不能な中央チャネルを共有する。
+- 想定した順序段階が、方向依存のない独立並列チャネルでよりよく説明される。
+- `L_log` と `K_conn` を順序依存した異なる変換として区別できない。
+- workload効果が別アーキテクチャでしか説明できない。
+- 妥当な測定モデルの下でend-to-end保持効率とthroughput capacityが経験的に単一軸へ縮約できる。
+
+---
+
+### 18.11 External comparison / 外部研究との比較
+
+This architecture choice is deliberately conservative.
+
+- Pashler (1994) reviewed dual-task evidence supporting stubborn bottlenecks in response selection and some memory-retrieval operations, while also noting additional and distinct sources of interference.
+- McClelland (1979) formalized cascade processing in which stages can continuously transmit partial information to subsequent stages rather than waiting for discrete completion.
+- Townsend and Wenger (2004) treated processing architecture, channel interaction, and system capacity as separable properties and developed measures for interactive parallel systems.
+- Systems Factorial Technology research further emphasizes that similar capacity patterns can arise from different architectures; architecture and capacity therefore require separate identification tests.
+
+These works are used only as methodological constraints and comparison points. They do not empirically validate the present U-structure model.
+
+### 日本語
+
+本監査のアーキテクチャ選択は意図的に保守的である。
+
+- Pashler (1994) は二重課題研究を整理し、反応選択や一部の記憶検索に強いボトルネックを支持する一方、干渉源が一種類ではないことも示している。
+- McClelland (1979) は、前段の完全終了を待たず部分情報を後段へ連続的に渡すcascade処理を形式化した。
+- Townsend and Wenger (2004) は、処理アーキテクチャ、チャネル相互作用、システム容量を分離可能な性質として扱い、相互作用的並列処理の容量理論を構築した。
+- Systems Factorial Technology 系研究では、類似した容量パターンが異なるアーキテクチャから生じうるため、architectureとcapacityを別々に識別する必要があることが強調されている。
+
+これらは方法論上の制約・比較点としてのみ用いる。U構造モデルそのものを経験的に実証する資料ではない。
+
+### References
+
+- McClelland, J. L. (1979). *On the Time Relations of Mental Processes: An Examination of Systems of Processes in Cascade*. Psychological Review, 86, 287–330.
+- Pashler, H. (1994). *Dual-Task Interference in Simple Tasks: Data and Theory*. Psychological Bulletin, 116(2), 220–244. https://doi.org/10.1037/0033-2909.116.2.220
+- Townsend, J. T., & Wenger, M. J. (2004). *A Theory of Interactive Parallel Processing: New Capacity Measures and Predictions for a Response Time Inequality Series*. Psychological Review, 111(4), 1003–1035. https://doi.org/10.1037/0033-295X.111.4.1003
