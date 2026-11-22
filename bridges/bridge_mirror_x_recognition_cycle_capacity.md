@@ -2303,3 +2303,346 @@ Structural Kernel v0.1 may now be used as the baseline for structural experiment
 - the kernel does not establish a temporal cascade architecture.
 
 The next research decision should concern **which structural experiment can discriminate among the stage hypotheses**, rather than adding more free parameters.
+
+
+---
+
+## 20. Discriminating Structural Experiment v0.1
+## 構造識別実験 v0.1
+
+### 20.1 Purpose / 目的
+
+The purpose of this experiment is not to increase model complexity.
+
+It asks the narrower question:
+
+> Are `L_log` and `K_conn` genuinely distinguishable stages, and if so, is the order `L → K` distinguishable from `K → L`?
+
+The experiment compares four structural competitors while holding the common upstream state and rebaselining transfer fixed.
+
+### 日本語
+
+本実験の目的はモデルを複雑化することではない。
+
+問うのは次の一点である。
+
+> `L_log` と `K_conn` は本当に区別すべき段階なのか。また区別する場合、`L → K` と `K → L` の順序を識別できるか。
+
+共通の上流状態と再基盤化通過率を固定し、4つの競合構造を比較する。
+
+---
+
+### 20.2 Competing models / 競合モデル
+
+Let `X_2` denote the common state immediately before the L/K structure.
+
+#### M1: L-before-K
+
+`M = X_2 T_L`
+
+`Y = M T_K T_R`
+
+#### M2: K-before-L
+
+`M = X_2 T_K`
+
+`Y = M T_L T_R`
+
+#### M3: Collapsed-pre probe
+
+L and K are not represented as distinguishable internal stages at the probe.
+
+`M = X_2`
+
+`Y = X_2 T_L T_K T_R`
+
+#### M4: Collapsed-post probe
+
+The probe is downstream of a single collapsed L/K transformation.
+
+`M = X_2 T_L T_K`
+
+`Y = M T_R`
+
+All four models satisfy the same endpoint equation:
+
+`Y = X_2 T_L T_K T_R`.
+
+### 日本語
+
+`X_2` をL/K構造へ入る直前の共通状態とする。
+
+競合モデルは、
+
+- **M1**：論理構造化 `L` が自己意味接続 `K` に先行する
+- **M2**：`K` が `L` に先行する
+- **M3**：L/Kを独立段階として表現せず、中間観測点が統合変換より上流にある
+- **M4**：L/Kを一段へ統合し、中間観測点が統合変換より下流にある
+
+の4つである。
+
+重要なのは、4モデルすべてが最終到達量について、
+
+`Y = X_2 T_L T_K T_R`
+
+という同一予測を返すことである。
+
+---
+
+### 20.3 Endpoint non-identifiability / 最終値のみの非識別性
+
+For positive transfers, define log-parameters:
+
+`θ_L = log T_L`
+
+`θ_K = log T_K`.
+
+Endpoint-only observation gives:
+
+`log Y = constant + θ_L + θ_K`.
+
+Its sensitivity/Jacobian with respect to `(θ_L, θ_K)` is:
+
+`J_Y = [1, 1]`.
+
+The rank is 1.
+
+Therefore endpoint-only data cannot separately identify the L and K contributions or their order.
+
+This is a structural property of the multiplicative kernel, not a sample-size problem.
+
+### 日本語
+
+正の通過率に対して、
+
+`θ_L = log T_L`
+
+`θ_K = log T_K`
+
+と置く。
+
+最終値だけを観測すると、
+
+`log Y = 定数 + θ_L + θ_K`
+
+であり、`(θ_L, θ_K)` に対する感度行列は、
+
+`J_Y = [1,1]`
+
+となる。
+
+rankは1である。
+
+したがって最終値だけでは、
+
+- LとKの寄与を分離できない
+- L→KとK→Lを識別できない
+
+という構造的非識別性がある。
+
+これはデータ量不足の問題ではなく、モデル式そのものの性質である。
+
+---
+
+### 20.4 Intermediate observation restores local identifiability
+### 中間観測による局所識別
+
+For M1 (`L → K`):
+
+`log M = constant + θ_L`
+
+`log Y = constant + θ_L + θ_K`.
+
+The Jacobian is:
+
+`J_LK = [[1,0],[1,1]]`.
+
+Its rank is 2.
+
+For M2 (`K → L`):
+
+`J_KL = [[0,1],[1,1]]`.
+
+Its rank is also 2.
+
+Thus one informative intermediate measurement, together with the endpoint, is mathematically sufficient in the idealized model to separate the two transfer factors locally.
+
+This does not yet mean that a real psychological variable corresponding to `M` has been identified.
+
+### 日本語
+
+M1（`L→K`）では、
+
+`log M = 定数 + θ_L`
+
+`log Y = 定数 + θ_L + θ_K`
+
+となり、
+
+`J_LK = [[1,0],[1,1]]`
+
+でrankは2となる。
+
+M2（`K→L`）でも、
+
+`J_KL = [[0,1],[1,1]]`
+
+でrankは2である。
+
+したがって理想化モデル内部では、**情報を持つ中間観測点を1つ追加することで、LとKを局所的に分離できる**。
+
+ただし、現実の心理過程において `M` に対応する測定変数が既に見つかったという意味ではない。
+
+---
+
+### 20.5 Factorial intervention design / 2×2介入設計
+
+Use two levels for each stage:
+
+- `T_L ∈ {L_high, L_low}`
+- `T_K ∈ {K_high, K_low}`
+
+while holding `X_2` and `T_R` fixed.
+
+The reference synthetic configuration is:
+
+- `X_2 = 0.5184`
+- `T_R = 0.85`
+- `L_high = 0.80`
+- `L_low = 0.30`
+- `K_high = 0.70`
+- `K_low = 0.50`
+
+Define normalized intervention effects:
+
+`E_L(mid) = 1 - M(L_low,K_high)/M(L_high,K_high)`
+
+`E_K(mid) = 1 - M(L_high,K_low)/M(L_high,K_high)`.
+
+The endpoint effects are defined analogously.
+
+### 日本語
+
+LとKをそれぞれ高／低の二水準とする2×2介入を用いる。
+
+他の条件は固定する。
+
+ここで重要なのは絶対値ではなく、**どの介入が中間観測点から下流を変えるかという署名**である。
+
+---
+
+### 20.6 Synthetic discrimination result / 合成識別結果
+
+The implemented synthetic experiment produced:
+
+| Model | E_L(mid) | E_K(mid) | E_L(endpoint) | E_K(endpoint) | Signature |
+|---|---:|---:|---:|---:|---|
+| M1: L→K | 0.625000 | 0.000000 | 0.625000 | 0.285714 | L-only at mid |
+| M2: K→L | 0.000000 | 0.285714 | 0.625000 | 0.285714 | K-only at mid |
+| M3: collapsed/pre | 0.000000 | 0.000000 | 0.625000 | 0.285714 | neither at mid |
+| M4: collapsed/post | 0.625000 | 0.285714 | 0.625000 | 0.285714 | both at mid |
+
+The endpoint intervention effects are identical across all four models.
+
+The intermediate intervention signature separates the four structural classes under ideal selective interventions.
+
+### 日本語
+
+合成実験では、
+
+- **L介入だけ中間値を変える** → `L→K`
+- **K介入だけ中間値を変える** → `K→L`
+- **どちらも中間値を変えない** → L/K分離不要、または観測点が両者より上流
+- **両方が中間値を変える** → collapsed変換、または観測点が両者より下流
+
+という4種類の署名に分かれた。
+
+一方、最終再基盤化到達量だけを見ると4モデルの介入効果は完全に同じである。
+
+---
+
+### 20.7 Philosophical interpretation / 哲学的解釈
+
+In the present theoretical language, the experiment asks:
+
+> Does information first become structurally understandable and only then become connected to the self-preservation/meaning network, or does self-relevance precede structural understanding?
+
+The two hypotheses are:
+
+#### H_LK: 理解 → 自己接続
+
+`差分 → 高次処理 → 論理構造化 → 「自分にとって分かる／つながる」 → 再基盤化`
+
+#### H_KL: 自己接続 → 理解
+
+`差分 → 高次処理 → 「自分に関係がある／気になる」 → 論理構造化 → 再基盤化`
+
+The collapsed hypothesis states that the present theory does not need to separate these as distinct transformations.
+
+The experiment is therefore not asking which description sounds more plausible. It asks what intervention pattern would make the distinctions scientifically necessary.
+
+### 日本語補足
+
+この実験の哲学的意味は、
+
+> 「わかるから好き／自己へ接続される」のか、  
+> 「自己へ接続されるから、深くわかるようになる」のか、  
+> あるいは現段階では両者を分ける必要自体がないのか
+
+をモデル比較として扱うことである。
+
+---
+
+### 20.8 Intervention-specificity requirement / 介入特異性条件
+
+The discriminating signature is valid only if the L-directed and K-directed interventions are sufficiently selective.
+
+If an intervention intended for `L_log` also changes `K_conn`, then an apparent "both-stage" effect may be caused by intervention leakage rather than model architecture.
+
+Therefore any later empirical or self-experiment version must separately audit:
+
+- intervention specificity,
+- measurement specificity,
+- upstream side effects,
+- downstream feedback,
+- baseline stability.
+
+Without this audit, causal interpretation is not justified.
+
+### 日本語
+
+この識別署名が有効なのは、L介入とK介入が十分に選択的である場合に限る。
+
+たとえば「論理構造化能力だけを変えたつもり」の介入が自己意味接続性も変えていれば、両段階への効果は構造の証拠ではなく介入漏れかもしれない。
+
+したがって将来の経験的検証では、介入特異性そのものを先に監査する必要がある。
+
+---
+
+### 20.9 Current decision / 現在の判定
+
+The experiment establishes three internal results.
+
+1. **Endpoint-only falsification is impossible** for the present multiplicative L/K ordering hypotheses.
+2. **An intermediate state plus selective interventions is sufficient in the idealized model** to discriminate L→K, K→L, and collapsed structural classes.
+3. The current theory therefore has a concrete empirical requirement: it must eventually define an observable or operational proxy for the L/K intermediate state.
+
+No model among M1–M4 is empirically selected by the synthetic experiment itself.
+
+The correct next step is not to declare `L→K` true, but to perform an **Intermediate Proxy Audit**:
+
+> What observable quantity could legitimately represent the state between logical structuring and semantic/self-connective integration?
+
+### 日本語
+
+本実験から内部的に確定できるのは以下である。
+
+1. 現在の乗法kernelでは、最終値だけを使ってL/K順序を反証することはできない。
+2. 理想化モデルでは、中間状態1つと段階選択的介入があれば、`L→K`、`K→L`、collapsed構造を識別できる。
+3. したがって理論がL/K分離を維持するためには、将来的にL/K間の状態を表す観測可能proxyを定義しなければならない。
+
+合成実験そのものはM1〜M4のどれも経験的に選択していない。
+
+次工程は **Intermediate Proxy Audit** とする。
+
+> 論理構造化と自己意味接続の間にある状態を、何によって観測・操作化できるか。
