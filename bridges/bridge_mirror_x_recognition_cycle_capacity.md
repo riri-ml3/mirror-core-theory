@@ -1967,3 +1967,339 @@ These works are used only as methodological constraints and comparison points. T
 - McClelland, J. L. (1979). *On the Time Relations of Mental Processes: An Examination of Systems of Processes in Cascade*. Psychological Review, 86, 287–330.
 - Pashler, H. (1994). *Dual-Task Interference in Simple Tasks: Data and Theory*. Psychological Bulletin, 116(2), 220–244. https://doi.org/10.1037/0033-2909.116.2.220
 - Townsend, J. T., & Wenger, M. J. (2004). *A Theory of Interactive Parallel Processing: New Capacity Measures and Predictions for a Response Time Inequality Series*. Psychological Review, 111(4), 1003–1035. https://doi.org/10.1037/0033-295X.111.4.1003
+
+
+---
+
+## 19. Structural Kernel v0.1 Implementation Audit
+## Structural Kernel v0.1 実装監査
+
+### 19.1 Status / 判定
+
+**PASS FOR STRUCTURAL-KERNEL BASELINE**
+
+The one-cycle structural kernel has now been implemented and boundary-tested.
+
+Implementation files:
+
+- `simulations/structural_kernel_v0_1.py`
+- `simulations/test_structural_kernel_v0_1.py`
+
+The implementation uses only the Python standard library and contains no `P_info → load` service-capacity extension.
+
+### 日本語
+
+**Structural Kernel 基準形としてPASS**
+
+一周期のStructural Kernelを実装し、境界値試験を行った。
+
+実装ファイルは以下である。
+
+- `simulations/structural_kernel_v0_1.py`
+- `simulations/test_structural_kernel_v0_1.py`
+
+実装はPython標準ライブラリのみに依存し、`P_info → load` のservice-capacity拡張は含めない。
+
+---
+
+### 19.2 Philosophical naming map / 哲学語対応
+
+| Operational symbol | Operational meaning | Philosophical reading candidate |
+|---|---|---|
+| `Δ_unres` | unresolved difference | 未解決差分 |
+| `R_nr` | non-recoverability weight | 非回収可能性／不可逆差分重み |
+| `Q` | salience-weighted input | 問題顕著性／差分顕在量 |
+| `G_avail` | higher-order processing availability | 高次処理可用性 |
+| `T_info` | information-stage transfer efficiency | 情報通過効率 |
+| `T_L` | structural-processing transfer efficiency | 論理構造化通過効率 |
+| `T_K` | semantic/self-connective transfer efficiency | 自己意味接続通過効率 |
+| `T_R` | rebaselining transfer efficiency | 再基盤化通過効率 |
+| `Y_rebase` | realized flow reaching the rebaselining candidate | 再基盤化到達量 |
+| `R_cycle` | end-to-end reach-through fraction | 再基盤化到達率／相対選択情報の保存到達率候補 |
+| `R_i` | stage accounting residual | 段階未通過残差 |
+
+The philosophical labels are interpretive aids. They do not replace the operational definitions.
+
+### 日本語補足
+
+特に `R_cycle` は「宇宙情報の保存率」ではない。  
+現行kernel内部で、顕著性 `Q` として入力された量のうち、再基盤化候補まで到達しうる割合を表す。
+
+---
+
+### 19.3 Formal kernel / 形式
+
+The implemented baseline is:
+
+`Q = Δ_unres + β_R R_nr Δ_unres(1-Δ_unres)`
+
+`G_avail = sigmoid(κ(f_n - θ_F - λ_T Threat_n))`
+
+with provisional identity transfer maps:
+
+`T_L = L_log`
+
+`T_K = K_conn`
+
+`T_R = 1-K_O`.
+
+The ordered accounting states are:
+
+`X_0 = Q`
+
+`X_1 = X_0 G_avail`
+
+`X_2 = X_1 T_info`
+
+`X_3 = X_2 T_L`
+
+`X_4 = X_3 T_K`
+
+`Y_rebase = X_4 T_R`.
+
+The end-to-end reach-through fraction is:
+
+`R_cycle = G_avail T_info T_L T_K T_R`.
+
+For `Q>0`:
+
+`R_cycle = Y_rebase / Q`.
+
+For `Q=0`, `R_cycle` is only a counterfactual structural coefficient; no realized flow exists.
+
+### 日本語
+
+実装基準式は上記の通りである。
+
+`Q=0` のとき実際の再基盤化フローは存在しない。  
+この場合の `R_cycle` は、「もし入力が存在した場合に同じ構造条件なら何割が通過しうるか」という反実仮想的な構造係数にすぎない。
+
+---
+
+### 19.4 Accounting identity is not a physical conservation law
+### 会計恒等式は物理的保存則ではない
+
+The residual identity is:
+
+`Q = Y_rebase + R_gate + R_info + R_L + R_K + R_rebase`.
+
+This is an algebraic accounting identity created by sequentially partitioning the same normalized salience flow.
+
+It must **not** be interpreted as:
+
+- conservation of physical information,
+- conservation of Shannon information,
+- a thermodynamic conservation law,
+- proof of the Mirror/Absolute-0 ontology.
+
+The residual meanings remain unresolved.
+
+### 日本語
+
+残差恒等式
+
+`Q = Y_rebase + R_gate + R_info + R_L + R_K + R_rebase`
+
+は、同一の正規化された顕著性フローを段階ごとに分解した**会計恒等式**である。
+
+したがって、
+
+- 物理情報の保存則
+- Shannon情報量の保存則
+- 熱力学的保存則
+- ミラー理論またはAbsolute-0存在論の証明
+
+とは解釈しない。
+
+各残差が心理的・情報論的に何を意味するかは未確定である。
+
+---
+
+### 19.5 Boundary-test results / 境界値試験
+
+The implementation passed 11 explicit unit tests covering:
+
+1. `Δ_unres=0 → Q=0` and zero realized flow,
+2. `Δ_unres=1 → Q=1` independently of `R_nr`,
+3. boundedness `0≤Q≤1` over a parameter grid,
+4. non-increasing stage flow,
+5. accounting identity,
+6. zero transfer at any stage blocks downstream realized flow,
+7. `R_cycle=Y_rebase/Q` when `Q>0`,
+8. counterfactual interpretation of `R_cycle` when `Q=0`,
+9. final-product invariance under transfer-stage permutation,
+10. soft-gate behavior at zero foundation stability,
+11. input-domain validation.
+
+A separate 501-point sweep for each variable preserved the intended monotonic direction of `Y_rebase` with respect to:
+
+- `Δ_unres`,
+- `R_nr`,
+- foundation stability,
+- threat,
+- `T_info`,
+- `L_log`,
+- `K_conn`,
+- `K_O`.
+
+These tests establish internal consistency only, not empirical validity.
+
+### 日本語
+
+11項目の明示的unit testを通過した。
+
+また各変数について501点走査を行い、`Y_rebase` の意図した単調方向が維持されることを確認した。
+
+これは内部整合性の確認であり、経験的妥当性の証明ではない。
+
+---
+
+### 19.6 Critical limitation: final output does not identify stage order
+### 重要な限界：最終値だけでは段階順序を識別できない
+
+Because multiplication is commutative,
+
+`T_info T_L T_K T_R`
+
+has the same final product under permutation.
+
+Therefore `Y_rebase` and `R_cycle` alone cannot establish that the true process order is:
+
+`information → logical structuring → semantic connectivity → rebaselining`.
+
+The theoretical ordering is represented only by preserving:
+
+- intermediate states `X_1...X_4`,
+- stage-specific residuals,
+- future stage-specific observations or interventions.
+
+This creates a direct falsification requirement: if empirical or simulation evidence cannot distinguish the intermediate stages, the proposed ordered decomposition may be unnecessary.
+
+### 日本語
+
+積は可換であるため、最終積だけでは、
+
+`情報 → 論理構造化 → 自己意味接続 → 再基盤化`
+
+という順序が真であることを識別できない。
+
+理論上の順序を意味あるものとして保持するには、
+
+- 中間状態 `X_1...X_4`
+- 段階別残差
+- 将来の段階別観測または介入
+
+を必要とする。
+
+もし将来これらの中間段階を区別する必要性が示せなければ、順序分解自体を簡約すべきである。
+
+---
+
+### 19.7 Critical limitation: this is not yet temporal dynamics
+### 重要な限界：まだ時間動力学ではない
+
+Despite the staged-cascade interpretation, Structural Kernel v0.1 has no explicit time variable, processing delay, state derivative, queue, or stage service rate.
+
+It is therefore more precisely a:
+
+> **one-cycle ordered structural-flow decomposition**
+
+rather than a complete dynamic system.
+
+Temporal cascade claims require a later model containing explicit time or event-order data.
+
+### 日本語
+
+staged-cascadeという解釈を採用しているが、Structural Kernel v0.1には、
+
+- 明示的時間変数
+- 処理遅延
+- 状態微分
+- queue
+- 段階service rate
+
+が存在しない。
+
+したがって現段階の正確な位置づけは、
+
+> **一周期の順序付き構造フロー分解**
+
+である。
+
+完全な時間動力学モデルではない。
+
+---
+
+### 19.8 Critical limitation: stage-count dependence
+### 重要な限界：段階数依存
+
+`R_cycle` is a product of transfer fractions.
+
+Adding a new stage with transfer efficiency below 1 necessarily reduces the product even if the underlying observer has not changed.
+
+Therefore `R_cycle` may be compared only under a fixed stage specification and model version.
+
+Cross-version comparisons require an explicit mapping between stage decompositions.
+
+### 日本語
+
+`R_cycle` は段階通過率の積である。
+
+1未満の新しい段階を追加すれば、観測者の実体が変化していなくても積は必ず低下する。
+
+したがって `R_cycle` は、**同一の段階仕様・同一モデルバージョン内**でのみ直接比較する。
+
+モデル更新によって段階数を変更する場合、旧版との比較には明示的な写像を必要とする。
+
+---
+
+### 19.9 Soft-gate boundary / ソフトゲート境界
+
+The logistic availability gate never becomes exactly zero or one for finite parameters.
+
+Therefore:
+
+`foundation_stability=0`
+
+does not automatically imply:
+
+`G_avail=0`.
+
+This is intentional in v0.1 because the existing U-foundation theory states that stable foundation can increase the probability of higher-order activity, but does not establish the stronger axiom that complete foundation instability makes all higher-order activity impossible.
+
+A hard-zero gate must not be introduced without separate justification.
+
+### 日本語
+
+ロジスティック型 `G_avail` は有限パラメータでは厳密な0または1にならない。
+
+したがって、
+
+`foundation_stability=0`
+
+から直ちに、
+
+`G_avail=0`
+
+とはならない。
+
+これは意図的である。
+
+既存U-Foundation理論は、基盤安定が高次活動確率を高めうるとはしているが、「基盤安定0なら高次活動が絶対に0」という強い公理までは置いていないためである。
+
+---
+
+### 19.10 Decision / 現在の固定範囲
+
+Structural Kernel v0.1 may now be used as the baseline for structural experiments under the following restrictions:
+
+- `Q` is a salience-weighted input proxy, not information mass,
+- `R_cycle` is a rebaselining reach-through fraction, not service capacity,
+- `Y_rebase` is realized normalized flow reaching the rebaselining candidate, not `U_{1,O}^{(n+1)}` itself,
+- identity maps for `T_L`, `T_K`, and `T_R` remain simulation hypotheses,
+- residuals have no fixed ontology,
+- the kernel does not contain workload/service capacity,
+- the kernel does not test Absolute-0 / 0↔100,
+- the kernel does not establish a temporal cascade architecture.
+
+The next research decision should concern **which structural experiment can discriminate among the stage hypotheses**, rather than adding more free parameters.
