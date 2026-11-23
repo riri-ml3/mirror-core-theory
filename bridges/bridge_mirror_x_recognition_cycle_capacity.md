@@ -2646,3 +2646,438 @@ The correct next step is not to declare `L→K` true, but to perform an **Interm
 次工程は **Intermediate Proxy Audit** とする。
 
 > 論理構造化と自己意味接続の間にある状態を、何によって観測・操作化できるか。
+
+
+---
+
+## 21. Intermediate Proxy Audit v0.1
+## 中間状態proxy監査 v0.1
+
+### 21.1 Audit question / 監査質問
+
+The previous discrimination experiment showed that endpoint-only observation cannot distinguish the order or separability of `L_log` and `K_conn`.
+
+The present audit asks:
+
+> Can the intermediate state be defined without assuming in advance that `L → K` is true?
+
+The answer is yes, if the intermediate state is treated as a **layer-relative binary/graded state space**, rather than as one privileged state `M`.
+
+### 日本語
+
+前段階の構造識別実験により、最終値だけでは `L_log` と `K_conn` の順序・分離可能性を識別できないことが確認された。
+
+本監査では、
+
+> `L → K` をあらかじめ真と仮定せずに、中間状態を定義できるか
+
+を問う。
+
+結論として、中間状態を単一の特権的な `M` とせず、**層依存的な0/1状態空間**として扱えば可能である。
+
+---
+
+### 21.2 Continuous latent coordinates and relative 0/1 labels
+### 連続潜在座標と相対0/1ラベル
+
+Let:
+
+- `l ∈ [0,1]`: structural-understanding coordinate,
+- `k ∈ [0,1]`: semantic/self-connectivity coordinate.
+
+These are operational latent coordinates, not ontological quantities.
+
+For preregistered thresholds `θ_L` and `θ_K`, define relative binary labels:
+
+`z_L = 1[l ≥ θ_L]`
+
+`z_K = 1[k ≥ θ_K]`.
+
+The binary values are therefore **coarse-grained relative states**.
+
+They are not Absolute-0 / Absolute-1.
+
+### 日本語
+
+以下の連続潜在座標を置く。
+
+- `l ∈ [0,1]`：論理・構造理解座標
+- `k ∈ [0,1]`：意味的・自己関連接続座標
+
+これらは操作的潜在座標であり、存在論的実体ではない。
+
+事前固定した閾値 `θ_L`, `θ_K` に対して、
+
+`z_L = 1[l ≥ θ_L]`
+
+`z_K = 1[k ≥ θ_K]`
+
+とする。
+
+ここで得られる0/1は、**粗視化された相対状態**であり、Absolute-0 / Absolute-1ではない。
+
+---
+
+### 21.3 Four-state layer-relative space / 四状態の層依存空間
+
+The minimal state space is:
+
+| State | Formal form | Operational reading |
+|---|---|---|
+| `S_00` | `(0_L,0_K)` | neither structurally understood nor self-connected |
+| `S_10` | `(1_L,0_K)` | structurally understood but not yet self-connected |
+| `S_01` | `(0_L,1_K)` | self-relevant/connected but not yet structurally understood |
+| `S_11` | `(1_L,1_K)` | both structurally understood and self-connected |
+
+The previous candidate intermediate state becomes:
+
+`M_LK := S_10`.
+
+The reverse-order competitor is:
+
+`M_KL := S_01`.
+
+Thus `M` is not one universal state.
+
+### 日本語
+
+最小状態空間は以下である。
+
+| 状態 | 形式 | 操作的意味 |
+|---|---|---|
+| `S_00` | `(0_L,0_K)` | 構造理解も自己接続も成立していない |
+| `S_10` | `(1_L,0_K)` | 構造的には理解されているが、自己意味ネットワークへは未接続 |
+| `S_01` | `(0_L,1_K)` | 自己関連性はあるが、構造的理解はまだ成立していない |
+| `S_11` | `(1_L,1_K)` | 構造理解と自己接続の双方が成立 |
+
+先に想定した中間状態は、
+
+`M_LK := S_10`
+
+と定義できる。
+
+逆順競合仮説の中間状態は、
+
+`M_KL := S_01`
+
+である。
+
+したがって `M` は普遍的に一つの状態ではない。
+
+---
+
+### 21.4 Relation to the zero project / 0研究との関係
+
+The state `S_10=(1_L,0_K)` is not "zero itself."
+
+It means:
+
+> the same information is relatively 1 on the structural-understanding coordinate and relatively 0 on the self-connectivity coordinate.
+
+Therefore the zero correspondence is **coordinate-relative**.
+
+This supports a broader Bridge hypothesis:
+
+> A manifest information item can be 1 in one representational layer while remaining 0 in another layer.
+
+This is compatible with the existing typed-zero program because the 0 appearing here is a manifest-layer relative zero, not `ZERO_abs`.
+
+### 日本語
+
+`S_10=(1_L,0_K)` は「0そのもの」ではない。
+
+意味するのは、
+
+> 同じ情報が、構造理解座標では相対1であり、自己接続座標では相対0である
+
+ということである。
+
+したがって今回の0対応は**座標依存的**である。
+
+ここから次のBridge仮説候補を置ける。
+
+> 一つの顕現情報は、ある表現層では1でありながら、別の表現層では0のままでありうる。
+
+ここでの0は顕現層内部の相対0であり、`ZERO_abs` ではない。
+
+---
+
+### 21.5 Background / foreground hypothesis is separate
+### 水面下／前景仮説は別変数である
+
+The user's "below the surface of self-consciousness" intuition must not be identified automatically with `K_conn=0`.
+
+Self-connectivity and conscious foreground access are distinct candidate properties.
+
+Therefore:
+
+`K_conn ≠ conscious access`.
+
+If the background/foreground hypothesis is later modeled, it requires an additional variable such as:
+
+`A_fg`: foreground accessibility / reportability.
+
+A possible future state might then be:
+
+`(z_L,z_K,z_A)`.
+
+However, `A_fg` is **not introduced into Structural Kernel v0.1** because no operational definition has yet been audited.
+
+### 日本語
+
+「自意識の水面下にある」という直感を、直ちに `K_conn=0` と同一視してはならない。
+
+自己接続性と、自意識面への前景化・報告可能性は別の性質である可能性が高い。
+
+したがって、
+
+`K_conn ≠ conscious access`
+
+とする。
+
+将来、水面下／前景仮説をモデル化する場合には、
+
+`A_fg`：前景アクセス性／報告可能性
+
+のような別変数を必要とする可能性がある。
+
+ただし `A_fg` はまだ操作定義が監査されていないため、Structural Kernel v0.1には追加しない。
+
+---
+
+### 21.6 Time-structure analogy / 時間構造との類比
+
+The relation to past-present-future is treated as a structural analogy, not identity.
+
+Possible analogy:
+
+- future-like: not yet selected/rebaselined,
+- present-like: transition boundary at which selection/integration is occurring,
+- past-like: stabilized/rebaselined structure.
+
+Thus an intermediate state may be **present-like in function** because it lies between unresolved possibility and stabilized retention.
+
+But:
+
+`M ≠ 0_coord`
+
+and
+
+`M ≠ 1_present`.
+
+The common feature is boundary function, not numerical identity.
+
+### 日本語
+
+過去・現在・未来との関係は、同一性ではなく構造類比として扱う。
+
+候補類比は、
+
+- future-like：まだ選択・再基盤化されていない
+- present-like：選択・統合が進行する境界
+- past-like：安定化・再基盤化された構造
+
+である。
+
+したがって中間状態は、未確定可能性と固定保存の間に位置するという意味で**現在的機能**を持つ可能性がある。
+
+ただし、
+
+`M ≠ 0_coord`
+
+かつ
+
+`M ≠ 1_present`
+
+である。
+
+共通するのは数値ではなく**境界機能**である。
+
+---
+
+### 21.7 Proxy classes for `l` / 構造理解proxy候補
+
+A valid `l` proxy should measure structural/semantic understanding while minimizing self-reference contamination.
+
+Candidate classes:
+
+1. causal-structure reconstruction,
+2. contradiction detection,
+3. relation-map reconstruction,
+4. transfer to a structurally novel but isomorphic problem,
+5. explanation accuracy under self-neutral wording.
+
+Simple recall alone is insufficient because self-referential encoding can alter memory independently of structural understanding.
+
+### 日本語
+
+`l` のproxyは、自己参照の混入をできる限り抑えつつ、構造的・意味的理解を測る必要がある。
+
+候補は以下である。
+
+1. 因果構造の再構成
+2. 矛盾検出
+3. 関係マップの再構成
+4. 構造的に同型な新規問題への転移
+5. 自己非依存表現での説明精度
+
+単純再生記憶だけでは不十分である。自己参照処理自体が記憶成績を変化させうるためである。
+
+---
+
+### 21.8 Proxy classes for `k` / 自己意味接続proxy候補
+
+A valid `k` proxy should measure relation to the observer's self-knowledge network, not simple positive liking.
+
+Candidate classes:
+
+1. self-descriptiveness / self-relatedness judgment,
+2. spontaneous generation of autobiographical or self-knowledge links,
+3. source-memory enhancement under self-reference relative to matched semantic encoding,
+4. persistence or spontaneous reactivation of self-linked material,
+5. cross-context integration with existing self-related knowledge.
+
+Preference or positive affect alone is insufficient.
+
+### 日本語
+
+`k` のproxyは単純な好意度ではなく、観測者の自己知識ネットワークとの関係を測る必要がある。
+
+候補は以下である。
+
+1. 自己記述性／自己関連性判断
+2. 自伝的・自己知識リンクの自発生成
+3. 対応する意味処理条件と比較した自己参照によるsource memory増強
+4. 自己接続情報の持続・自発再活性
+5. 既存自己知識との文脈横断的統合
+
+単純な選好・正感情だけをproxyとして用いてはならない。
+
+---
+
+### 21.9 External evidence: separability is plausible but order is unresolved
+### 外部研究：分離可能性は支持されるが順序は未確定
+
+Research on the self-reference effect provides evidence that semantic processing and self-referential processing should not automatically be treated as identical.
+
+- Symons & Johnson (1997) found a robust memory advantage for self-referential encoding relative to semantic encoding, while also arguing that organization and elaboration contribute to that advantage.
+- Several experimental paradigms explicitly compare self-reference and semantic-processing conditions and find separable behavioral or neural effects.
+- A single-case study reported self-reference benefits despite weak semantic-elaboration effects, arguing against reducing self-reference entirely to semantic elaboration.
+- Conversely, recent incidental-self-reference work found that semantic knowledge of the stimulus was necessary for the incidental self-reference effect in that paradigm.
+
+Therefore the literature supports **separability**, but does not justify a universal serial law `L → K` or `K → L`.
+
+### 日本語
+
+自己参照効果研究は、意味処理と自己参照処理を自動的に同一視すべきではないことを支持する。
+
+一方で、現在の文献から普遍的な `L→K` または `K→L` の直列法則を導くことはできない。
+
+したがって、本研究では順序を経験的問題として保持する。
+
+---
+
+### 21.10 Operational criterion for observing `S_10`
+### `S_10` 観測基準候補
+
+A candidate observation of `S_10=(1_L,0_K)` requires, for the **same information item**:
+
+1. preregistered `l` proxy exceeds `θ_L`,
+2. preregistered `k` proxy remains below `θ_K`,
+3. upstream exposure and task difficulty are controlled,
+4. the two measures have demonstrated discriminant validity,
+5. classification is stable beyond immediate measurement noise.
+
+No single questionnaire answer is sufficient.
+
+### 日本語
+
+`S_10=(1_L,0_K)` を観測したとみなすには、**同一情報項目について**最低限、
+
+1. 事前固定した `l` proxyが `θ_L` を超える
+2. 事前固定した `k` proxyが `θ_K` 未満に留まる
+3. 入力曝露量と課題難度が統制される
+4. L/K測定の弁別妥当性が確認される
+5. 一時的測定誤差を超えて分類が安定する
+
+ことを必要とする。
+
+単一の自己報告だけでは不十分である。
+
+---
+
+### 21.11 Competing hypotheses / 競合仮説
+
+#### H0: collapsed-factor hypothesis
+
+`L` and `K` are manifestations of one latent integration factor.
+
+Prediction:
+stable `S_10` and `S_01` states disappear after measurement error and task difficulty are controlled.
+
+#### H_LK: structural-first hypothesis
+
+Stable `S_10` exists and can transition toward `S_11`.
+
+#### H_KL: self-connectivity-first hypothesis
+
+Stable `S_01` exists and can transition toward `S_11`.
+
+#### H_BI: bidirectional hypothesis
+
+Both `S_10` and `S_01` occur, with reciprocal transitions or feedback.
+
+### 日本語
+
+競合仮説を以下の4つに固定する。
+
+- **H0 collapsed**：L/Kは一つの潜在統合因子であり、安定した `S_10`, `S_01` は存在しない。
+- **H_LK**：`S_10` が存在し、`S_10→S_11` が主要経路となる。
+- **H_KL**：`S_01` が存在し、`S_01→S_11` が主要経路となる。
+- **H_BI**：両中間状態が存在し、双方向またはフィードバック的遷移を持つ。
+
+---
+
+### 21.12 Falsification conditions / 反証条件
+
+The `S_10` intermediate-state hypothesis weakens if:
+
+- L and K proxies fail discriminant validity,
+- apparent `S_10` classifications vanish after controlling difficulty/reliability,
+- no stable same-item dissociation can be observed,
+- selective L-directed intervention changes K proxies immediately and inseparably,
+- a one-factor model explains the data as well as or better than the two-coordinate model.
+
+The layer-relative zero interpretation weakens if L/K dissociations cannot be operationally sustained.
+
+### 日本語
+
+`S_10` 中間状態仮説は以下の場合に弱まる。
+
+- L/K proxyの弁別妥当性が成立しない
+- 難度・信頼性を統制すると `S_10` 分類が消失する
+- 同一情報項目について安定したL/K乖離が観測できない
+- L選択介入がKを即時かつ不可分に変化させる
+- 一因子モデルが二座標モデルと同等以上に説明する
+
+L/K分離が操作的に維持できない場合、今回の層依存0解釈も弱まる。
+
+---
+
+### 21.13 Current decision / 現在の判定
+
+The intermediate state is now defined more rigorously as a **state region in a two-coordinate relative 0/1 space**, not as a new type of absolute zero.
+
+The preferred notation is:
+
+`M_LK = S_10 = (1_L,0_K)`
+
+only when the structural-first model is under test.
+
+The reverse competitor is retained:
+
+`M_KL = S_01 = (0_L,1_K)`.
+
+The background-consciousness analogy and the temporal-boundary analogy remain separate Bridge hypotheses and are not merged into the operational kernel.
+
+The next empirical-design task is to choose the smallest proxy battery capable of estimating `l` and `k` with discriminant validity.
