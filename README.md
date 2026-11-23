@@ -87,6 +87,13 @@ the mechanism by which an observer becomes a subject through a self-referential 
 - `bridges/bridge_mirror_x_ethics.md`
 - `bridges/bridge_mirror_x_zeta_primes.md`
 - `bridges/bridge_mirror_x_u_foundation.md`
+- `bridges/bridge_mirror_x_recognition_cycle_capacity.md`
+
+### Current simulation files
+- `simulations/structural_kernel_v0_1.py` — one-cycle ordered structural-flow kernel
+- `simulations/test_structural_kernel_v0_1.py` — boundary and accounting tests for Structural Kernel v0.1
+- `simulations/discriminating_structural_experiment_v0_1.py` — competing-model intervention signatures for L/K stage order
+- `simulations/test_discriminating_structural_experiment_v0_1.py` — tests for endpoint non-identifiability and intermediate-state discrimination
 
 ### Planned v0.2 bridge candidates
 The following bridge documents are planned or under discussion.  
